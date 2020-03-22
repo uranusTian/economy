@@ -14,10 +14,16 @@ import android.widget.FrameLayout;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.uranus.economy.R;
 import com.uranus.economy.constant.Constant;
+import com.uranus.economy.manager.UserManager;
+import com.uranus.economy.util.AppUtils;
+import com.uranus.economy.util.ScreenUtil;
+import com.uranus.economy.util.StatusBarUtils;
 import com.uranus.economy.views.BaseToolBar;
+import com.uranus.economy.views.WaterMarkView;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -27,7 +33,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 //所有Activity的基类
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     public Router router;//跳转路由
     private Unbinder bind;
@@ -84,12 +90,15 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void toolBarSetting(BaseToolBar toolBar) {
     }
+
     /**
      * 指定Layout布局
      *
      * @return layout的R文件地址
      */
-    public abstract int getLayoutId();
+    public int getLayoutId() {
+        return 0;
+    }
 
     /**
      * 无需重写Activity的onCreate，数据初始化在此方法执行

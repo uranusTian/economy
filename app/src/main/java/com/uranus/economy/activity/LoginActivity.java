@@ -14,18 +14,28 @@ import android.widget.TextView;
 
 import androidx.multidex.BuildConfig;
 
+import com.uranus.economy.ActivityLifecycleCallback;
 import com.uranus.economy.MainActivity;
 import com.uranus.economy.R;
 import com.uranus.economy.base.BaseActivity;
 import com.uranus.economy.bean.User;
+import com.uranus.economy.manager.UserManager;
+import com.uranus.economy.network.ApiException;
+import com.uranus.economy.network.AppRequest;
+import com.uranus.economy.network.callback.RequestCallback;
 import com.uranus.economy.util.AppUtils;
 import com.uranus.economy.util.KeyboardUtils;
 import com.uranus.economy.util.LogUtils;
+import com.uranus.economy.util.Md5Utils;
+import com.uranus.economy.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+
+import static com.uranus.economy.Global.REQUEST_LOGIN;
+import static com.uranus.economy.constant.Constant.Code.CODE_IDENTITY_ERROR;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.mUserName)
@@ -231,7 +241,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         switch (e.getCode()){
                             case CODE_IDENTITY_ERROR:
                                 ToastUtils.showShort(R.string.identify_code_error);
-                                showVerifyCode();
+//                                showVerifyCode();
                                 break;
                             default:
                                 ToastUtils.showShort(R.string.account_password_error);
