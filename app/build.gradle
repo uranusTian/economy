@@ -1,0 +1,119 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.uranus.economy"
+        minSdkVersion 16
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "app","env"
+    productFlavors {
+
+        TaskDistribution {
+            dimension "app"
+            versionCode 1
+            versionName "1.0.0"
+            applicationId "com.uranus.economy"
+//            buildConfigField 'String', 'WeChat_AppID', '"wx46e1d340f8901230"'
+//            buildConfigField "int", "APP_TYPE", "2"
+//            buildConfigField "int", "IXINTUI_APP_KEY", "1641685816"
+//            buildConfigField 'String', 'IXINTUI_CHANNEL', '"official"'
+//            buildConfigField 'String', 'XIAOMI_APPID', '"2882303761517964594"'
+//            buildConfigField 'String', 'XIAOMI_AppKey', '"5471796485594"'
+//            buildConfigField 'String', 'MEIZU_APPID', '"119304"'
+//            buildConfigField 'String', 'MEIZU_APPKEY', '"3666f60281de42d29587ecc16b101c7e"'
+
+        }
+
+        dev {
+            dimension "env"
+            buildConfigField 'String', 'HOST_URL_ADDRESS', '"http://192.168.10.195"'
+        }
+
+        local {
+            dimension "env"
+            buildConfigField 'String', 'HOST_URL_ADDRESS', '"http://192.168.10.195:20002"'
+        }
+
+        product {
+            dimension "env"
+            buildConfigField 'String', 'HOST_URL_ADDRESS', '"https://www.mediasuper.cn"'
+        }
+
+        pressure {
+            dimension "env"
+            buildConfigField 'String', 'HOST_URL_ADDRESS', '"http://114.67.233.202"'
+        }
+
+        v1 {
+            dimension "env"
+            buildConfigField 'String', 'HOST_URL_ADDRESS', '"http://v1.mediasuper.cn"'
+        }
+
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    //内存泄漏捕获：https://github.com/square/leakcanary
+    implementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    //okHttp：https://github.com/square/okhttp
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    //ButterKnife控件绑定：https://github.com/JakeWharton/butterknife
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    //EventBus：https://github.com/greenrobot/EventBus
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    //屏幕适配库：https://github.com/JessYanCoding/AndroidAutoSize
+    implementation 'me.jessyan:autosize:1.1.0'
+    //方法数量限制突破
+    implementation 'com.android.support:multidex:1.0.3'
+    //Glide：https://github.com/bumptech/glide
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+    implementation 'jp.wasabeef:glide-transformations:3.3.0'
+    //RxJava：https://github.com/ReactiveX/RxJava
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
+    //RxAndroid：https://github.com/ReactiveX/RxAndroid
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    //Retrofit：https://github.com/square/retrofit
+    // only Retrofit（只用Retrofit联网）
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    //Retrofit-json解析
+    implementation 'com.squareup.retrofit2:adapter-rxjava:2.2.0'
+    //Retrofit-RxJava
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
+    //Retrofit-请求Log
+    implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+    //Retrofit-RxJava2的适配器
+    implementation 'com.lovedise:permissiongen:0.0.6'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-20'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-20'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
+
+
+}

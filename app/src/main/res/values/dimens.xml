@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="padding_statusbar_height">0dp</dimen>
+    <dimen name="ranking_tabbar_marging_top">18dp</dimen>
+    <dimen name="toolbar_height">40dp</dimen>
+    <dimen name="padding_top_home">50dp</dimen>
+    <dimen name="padding_top_me">78dp</dimen>
+    <dimen name="padding_top_me1">250dp</dimen>
+</resources>

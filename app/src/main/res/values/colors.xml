@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2A66FD</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#2A66FD</color>
+
+    <color name="c_fff">#ffffff</color>
+    <color name="c_e94335">#E94335</color>
+    <color name="c_3b5998">#3B5998</color>
+    <color name="c_000000">#000000</color>
+    <color name="c_f7f7f8">#F7F7F8</color>
+    <color name="c_404040">#404040</color>
+    <color name="c_cacaca">#CACACA</color>
+    <color name="c_0bc2c6">#0BC2C6</color>
+    <color name="c_0090ff">#0090ff</color>
+    <color name="c_333333">#333333</color>
+    <color name="c_360000">#360000</color>
+    <color name="c_3c3c3c">#3c3c3c</color>
+    <color name="c_999999">#999999</color>
+    <color name="c_eeeeee">#eeeeee</color>
+    <color name="c_ffdc0b">#ffdc0b</color>
+    <color name="c_8652f8">#8652F8</color>
+    <color name="c_fecfe4">#fecfe4</color>
+    <color name="c_fec5df">#fec5df</color>
+    <color name="c_ff0074">#ff0074</color>
+    <color name="c_00eee5">#00eee5</color>
+    <color name="c_c4a9ff">#C4A9FF</color>
+    <color name="c_38c4ff">#38c4ff</color>
+    <color name="c_3C4858">#3c4858</color>
+    <color name="c_8492A6">#8492a6</color>
+    <color name="c_ffc415">#ffc415</color>
+    <color name="c_d1d5db">#D1D5DB</color>
+    <color name="c_1f2a38">#1F2A38</color>
+    <color name="c_6b4dae">#6B4DAE</color>
+    <color name="c_f5222d">#f5222d</color>
+    <color name="c_fc5555">#FC5555</color>
+    <color name="c_e0e0e0">#e0e0e0</color>
+    <color name="c_017bae">#017bae</color>
+    <color name="c_f6f7f8">#f6f7f8</color>
+    <color name="c_fafafa">#fafafa</color>
+    <color name="c_ff4d4d">#ff4d4d</color>
+    <color name="c_ff4d4d_80">#80ff4d4d</color>
+    <color name="c_aa05b4">#aa05b4</color>
+    <color name="c_f4a1fa">#f4a1fa</color>
+    <color name="c_924c0f">#924c0f</color>
+    <color name="c_e5e5e5">#e5e5e5</color>
+    <color name="c_9fe3ff">#9fe3ff</color>
+    <color name="c_8e65f0">#8e65f0</color>
+    <color name="c_6ecbf3">#6ecbf3</color>
+
+
+
+    <!--00：100%透明-->
+    <color name="c_transparent">#00000000</color>
+    <!--0D：95%透明,即5%实体-->
+    <color name="c_0d000000">#0d000000</color>
+    <color name="c_0dff0074">#0dff0074</color>
+    <!--1A：90%透明,即10%实体-->
+    <color name="c_1a000000">#1a000000</color>
+    <color name="c_1a0f0335">#1a0f0335</color>
+    <color name="c_1aff0074">#1aff0074</color>
+    <color name="c_1a00eee5">#1a00eee5</color>
+    <color name="c_1ae0e0e0">#1ae0e0e0</color>
+    <color name="c_1afff">#1affffff</color>
+
+    <!--21：87%透明，即13%实体-->
+    <color name="c_21ff0074">#21ff0074</color>
+    <color name="c_2100eee5">#2100eee5</color>
+    <color name="c_38c4ff_87">#2138c4ff</color>
+
+    <color name="c_6b4dae_15">#266B4DAE</color>
+    <color name="c_00eee5_11">#1C00EEE5</color>
+    <!--33：80%透明，即20%实体-->
+    <color name="c_33000000">#33000000</color>
+    <!--4D：70%透明，即30%实体-->
+    <color name="c_4d38c4ff">#4d38c4ff</color>
+    <color name="c_4d8652f8">#4d8652f8</color>
+    <color name="c_4dfff">#4dffffff</color>
+    <color name="c_4dff0074">#4dff0074</color>
+    <color name="c_4d00eee5">#4d00eee5</color>
+
+    <!--66：60%透明-->
+    <color name="c_66000000">#66000000</color>
+
+    <!--80：50%透明-->
+    <color name="c_80000000">#80000000</color>
+
+    <!--99：40%透明，即60%实体-->
+
+    <!--B3：30%透明-->
+    <color name="c_b3fff">#b3ffffff</color>
+
+    <!--CC：20%透明，即80%实体-->
+    <color name="c_cc8652f8">#cc8652f8</color>
+
+    <!--26：15%透明, 即85%实体-->
+    <color name="c_d9163376">#26163376</color>
+    <!--E6：10%透明-->
+    <color name="c_e6e0e0e0">#E6e0e0e0</color>
+
+
+
+    <color name="color_333333">#333333</color>
+    <color name="color_666666">#666666</color>
+    <color name="color_999999">#999999</color>
+    <color name="color_cccccc">#CCCCCC</color>
+    <color name="color_eeeeee">#eeeeee</color>
+    <color name="transparent">#00000000</color>
+    <color name="black">#000000</color>
+    <color name="black_96_percent">#0f000000</color>
+    <color name="black_95_percent">#0c000000</color>
+    <color name="black_90_percent">#1A000000</color>
+    <color name="black_80_percent">#33000000</color>
+    <color name="black_70_percent">#4d000000</color>
+    <color name="black_60_percent">#66000000</color>
+    <color name="black_half">#7F000000</color>
+    <color name="black_40_percent">#99000000</color>
+    <color name="black_30_percent">#48000000</color>
+    <color name="black_20_percent">#CC000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="white_20_percent">#CCFFFFFF</color>
+    <color name="white_half">#7fFFFFFF</color>
+    <color name="white_70_percent">#4cFFFFFF</color>
+    <color name="white_80_percent">#33ffffff</color>
+    <color name="white_90_percent">#19FFFFFF</color>
+    <color name="c_b697fa">#b697fa</color>
+    <color name="c_7142da">#7142da</color>
+    <color name="c_eef1f6">#eef1f6</color>
+    <color name="c_8658f8">#8658f8</color>
+    <color name="c_f8faff">#F8FAFF</color>
+    <color name="c_2a66fd">#2A66FD</color>
+    <color name="c_2a66fd_a_80">#332A66FD</color>
+    <color name="c_2a66fd_a_90">#1A2A66FD</color>
+    <color name="c_2a66fd_a_95">#0c2A66FD</color>
+    <color name="c_505050">#505050</color>
+    <color name="c_949494">#949494</color>
+    <color name="c_f0f0f0">#f0f0f0</color>
+    <color name="c_808080">#808080</color>
+</resources>

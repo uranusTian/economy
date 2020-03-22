@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">economy</string>
+    <string name="user_login_tip">账号密码登录</string>
+    <string name="account">账号</string>
+    <string name="username_hint">输入员工账号/手机/邮箱</string>
+    <string name="password">密码</string>
+    <string name="password_hint">请输入密码</string>
+    <string name="identifying_code">验证码</string>
+    <string name="enter_identifying_code_hint">请输入右侧验证码</string>
+    <string name="refresh">刷新</string>
+    <string name="login">登录</string>
+</resources>

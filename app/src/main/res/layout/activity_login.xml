@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_login_view_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingStart="35dp"
+    android:paddingTop="105dp"
+    android:paddingEnd="35dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/user_login_tip"
+        android:textColor="#505050"
+        android:textSize="24sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/account"
+                android:textColor="#505050"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/mUserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="52dp"
+                android:background="@null"
+                android:hint="@string/username_hint"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text=""
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="14dp"
+            android:background="#949494" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/password"
+                android:textColor="#505050"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/mPassWord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="52dp"
+                android:background="@null"
+                android:inputType="textPassword"
+                android:hint="@string/password_hint"
+                android:maxLength="16"
+                android:singleLine="true"
+                android:text=""
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="14dp"
+            android:background="#949494" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/identifying_code"
+                android:textSize="14sp"
+                android:textColor="#505050"/>
+            <EditText
+                android:id="@+id/mVerificationCode"
+                android:hint="@string/enter_identifying_code_hint"
+                android:background="@null"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="38dp"
+                android:singleLine="true"
+                android:maxLength="4"
+                android:textSize="14sp"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/mVerificationImage"
+                android:layout_width="80dp"
+                android:layout_height="30dp" />
+            <TextView
+                android:id="@+id/verify_refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="@string/refresh"
+                android:textSize="14sp"
+                android:textColor="@color/c_2a66fd"/>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="14dp"
+            android:background="#949494"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/mLogin"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="40dp"
+        android:enabled="false"
+        android:background="@drawable/selecter_login_btn_bg"
+        android:text="@string/login"
+        android:textColor="@color/white" />
+    <Button
+        android:id="@+id/mLogin_test"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_marginTop="40dp"
+        android:background="@null" />
+</LinearLayout>
+
+
