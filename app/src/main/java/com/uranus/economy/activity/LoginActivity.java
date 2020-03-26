@@ -1,6 +1,5 @@
 package com.uranus.economy.activity;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.Editable;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 import androidx.multidex.BuildConfig;
 
 import com.uranus.economy.ActivityLifecycleCallback;
-import com.uranus.economy.MainActivity;
 import com.uranus.economy.R;
 import com.uranus.economy.base.BaseActivity;
 import com.uranus.economy.bean.User;
@@ -29,10 +27,11 @@ import com.uranus.economy.util.LogUtils;
 import com.uranus.economy.util.Md5Utils;
 import com.uranus.economy.util.ToastUtils;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import butterknife.BindView;
 import butterknife.OnClick;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
 
 import static com.uranus.economy.Global.REQUEST_LOGIN;
 import static com.uranus.economy.constant.Constant.Code.CODE_IDENTITY_ERROR;
@@ -220,35 +219,37 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             LoginActivity.this.finish();
             return;
         }
-        String name = mUserName.getText().toString();
-        String pwd = mPassWord.getText().toString();
-        String verify = mVerificationCode.getText().toString();
-        String token = AppUtils.getToken(LoginActivity.this.getApplicationContext());
-        AppRequest.login(REQUEST_LOGIN, name, Md5Utils.md5(pwd), verify , token,
-                new RequestCallback<User>() {
-                    @Override
-                    public void onSuccess(User user) {
-                        isLoading = false;
-                        UserManager.getInstance().loginSuccess(user);
-                        AppUtils.saveUser(LoginActivity.this.getApplicationContext(), user);
-                        router.router(MainActivity.class);
-                        LoginActivity.this.finish();
-                    }
-
-                    @Override
-                    public void onError(ApiException e) {
-                        isLoading = false;
-                        switch (e.getCode()){
-                            case CODE_IDENTITY_ERROR:
-                                ToastUtils.showShort(R.string.identify_code_error);
-//                                showVerifyCode();
-                                break;
-                            default:
-                                ToastUtils.showShort(R.string.account_password_error);
-                                break;
-                        }
-                    }
-                });
+//        String name = mUserName.getText().toString();
+//        String pwd = mPassWord.getText().toString();
+//        String verify = mVerificationCode.getText().toString();
+//        String token = AppUtils.getToken(LoginActivity.this.getApplicationContext());
+        router.router(MainActivity.class);
+        LoginActivity.this.finish();
+//        AppRequest.login(REQUEST_LOGIN, name, Md5Utils.md5(pwd), verify , token,
+//                new RequestCallback<User>() {
+//                    @Override
+//                    public void onSuccess(User user) {
+//                        isLoading = false;
+//                        UserManager.getInstance().loginSuccess(user);
+//                        AppUtils.saveUser(LoginActivity.this.getApplicationContext(), user);
+//                        router.router(MainActivity.class);
+//                        LoginActivity.this.finish();
+//                    }
+//
+//                    @Override
+//                    public void onError(ApiException e) {
+//                        isLoading = false;
+//                        switch (e.getCode()){
+//                            case CODE_IDENTITY_ERROR:
+//                                ToastUtils.showShort(R.string.identify_code_error);
+////                                showVerifyCode();
+//                                break;
+//                            default:
+//                                ToastUtils.showShort(R.string.account_password_error);
+//                                break;
+//                        }
+//                    }
+//                });
     }
 
     @Override
@@ -261,4 +262,5 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             ToastUtils.showShort(R.string.tip_double_click_exit);
         }
     }
+
 }

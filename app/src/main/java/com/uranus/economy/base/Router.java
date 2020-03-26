@@ -5,7 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
-import me.jessyan.autosize.utils.LogUtils;
+import com.uranus.economy.util.LogUtils;
+
 
 public class Router {
     public static final String INTENT_DATA = "route_data";//intent传递数据的key
@@ -24,7 +25,7 @@ public class Router {
         try {
             baseActivity.startActivity(intent);
         } catch (ActivityNotFoundException e) {
-            LogUtils.e("ActivityNotFoundException:" + className.getName());
+            LogUtils.d1("Router","ActivityNotFoundException:" + className.getName());
         }
     }
 
@@ -37,7 +38,7 @@ public class Router {
         try {
             baseActivity.startActivityForResult(intent, requestCode);
         } catch (ActivityNotFoundException e) {
-            LogUtils.e("ActivityNotFoundException:" + className.getName());
+            LogUtils.d1("Router","ActivityNotFoundException:" + className.getName());
         }
     }
 
@@ -51,7 +52,7 @@ public class Router {
         try {
             baseActivity.startActivity(intent);
         } catch (ActivityNotFoundException e) {
-            LogUtils.e("ActivityNotFoundException:" + className.getName());
+            LogUtils.d1("Router","ActivityNotFoundException:" + className.getName());
         }
     }
 
@@ -66,7 +67,7 @@ public class Router {
         try {
             baseActivity.startActivityForResult(intent, requestCode);
         } catch (ActivityNotFoundException e) {
-            LogUtils.e("ActivityNotFoundException:" + className.getName());
+            LogUtils.d1("Router","ActivityNotFoundException:" + className.getName());
         }
     }
 

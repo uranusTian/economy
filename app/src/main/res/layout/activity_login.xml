@@ -45,7 +45,8 @@
                 android:maxLines="1"
                 android:singleLine="true"
                 android:text=""
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:layout_marginLeft="52dp" />
         </LinearLayout>
 
         <View
@@ -120,7 +121,8 @@
                 android:singleLine="true"
                 android:maxLength="4"
                 android:textSize="14sp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="38dp" />
             <ImageView
                 android:id="@+id/mVerificationImage"
                 android:layout_width="80dp"

@@ -27,11 +27,9 @@ public class WaterMarkView extends AppCompatTextView {
     }
 
     private void init() {
-//        SimpleDateFormat createTimeSdf1 = new SimpleDateFormat("yyyy-MM-dd");
         List<String> labels = new ArrayList<>();
-        labels.add("ID:" + UserManager.getInstance().getUser().id + "  " + UserManager.getInstance().getUser().name);
-//        labels.add(""+ createTimeSdf1.format(new Date()));
-//        labels.add("不可扩散");
+        labels.add("我是水印");
+        labels.add("I am watermark");
         setBackground(new WaterMarkBg(getContext(), labels, -30, 13, 40));
     }
 }

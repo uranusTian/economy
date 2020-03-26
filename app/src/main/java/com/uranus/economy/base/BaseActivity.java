@@ -26,6 +26,8 @@ import com.uranus.economy.views.BaseToolBar;
 import com.uranus.economy.views.WaterMarkView;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -52,10 +54,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (App.context == null) {
             App.context = getApplicationContext();
         }
-//        setSwipeBackEnable(false);
         if (initBundle(getIntent().getExtras())) {
-            //修改完语言后，自动适配会失效，重新设置
-//            AutoSize.autoConvertDensityOfGlobal(this);
             router = new Router(this);
             setContentView(getLayoutId());
             setStatusBarStyle(Constant.BarStyle.TRAN_BLACK);
@@ -79,9 +78,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         FrameLayout content = (FrameLayout)findViewById(android.R.id.content);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
-        if (UserManager.getInstance().isLogin()){
-            content.addView(new WaterMarkView(this),params);
-        }
+        content.addView(new WaterMarkView(this),params);
     }
 
     protected boolean isShowWaterMark() {
@@ -295,4 +292,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(Object myEvent) {
+
+    }
 }

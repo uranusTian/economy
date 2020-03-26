@@ -22,7 +22,7 @@
     </FrameLayout>
 
 
-    <com.publicsentiment.trustdata.views.font.FontTextView
+    <com.uranus.economy.views.FontTextView
         android:id="@+id/toolBarTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
         android:textSize="14sp"
         tools:text="title"/>
 
-    <com.publicsentiment.trustdata.views.font.FontTextView
+    <com.uranus.economy.views.FontTextView
         android:id="@+id/toolBarMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

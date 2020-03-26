@@ -1,0 +1,41 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:background="@color/white"
+    tools:context="com.uranus.economy.nav.NavFragment">
+
+    <com.uranus.economy.nav.NavigationButton
+        android:id="@+id/nav_1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp" />
+
+    <com.uranus.economy.nav.NavigationButton
+        android:id="@+id/nav_2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp" />
+
+    <com.uranus.economy.nav.NavigationButton
+        android:id="@+id/nav_3"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp" />
+
+    <com.uranus.economy.nav.NavigationButton
+        android:id="@+id/nav_4"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp" />
+</LinearLayout>
