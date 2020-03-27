@@ -2,6 +2,7 @@ package com.uranus.economy.base;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.util.Log;
 
 import androidx.multidex.BuildConfig;
 import androidx.multidex.MultiDex;
@@ -22,18 +23,10 @@ public class App extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
-        //根据项目模式区分一些操作
-        if (BuildConfig.DEBUG) {
-            //内存泄漏安装
-            LeakCanary.install(this);
-            //启动Log打印
-            LogUtils.setEnable(true);
-        }
-        //Release模式
-        else {
-            //关闭Log
-            LogUtils.setEnable(false);
-        }
+        //内存泄漏安装
+        LeakCanary.install(this);
+        //启动Log打印
+        LogUtils.setEnable(true);
         //突破655535方法数量限制
         MultiDex.install(this);
         LogUtils.d1(TAG, "--onCreate--");

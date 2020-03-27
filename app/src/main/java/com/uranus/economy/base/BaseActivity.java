@@ -44,7 +44,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected int activityCloseEnterAnimation;
     //Activity结束时，本页面的退出动画
     protected int activityCloseExitAnimation;
-    private Fragment mFragment;
     private View progress;
 
     @Override
@@ -163,27 +162,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void addFragment(int frameLayoutId, Fragment fragment) {
-        if (fragment != null) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            if (fragment.isAdded()) {
-                if (mFragment != null) {
-                    transaction.hide(mFragment).show(fragment);
-                } else {
-                    transaction.show(fragment);
-                }
-            } else {
-                if (mFragment != null) {
-                    transaction.hide(mFragment).add(frameLayoutId, fragment);
-                } else {
-                    transaction.add(frameLayoutId, fragment);
-                }
-            }
-            mFragment = fragment;
-            transaction.commit();
-        }
-    }
-
     @SuppressWarnings("unused")
     protected void replaceFragment(int frameLayoutId, Fragment fragment) {
         if (fragment != null) {
@@ -241,11 +219,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void showActivityProgress() {
         if (progress == null) {
             progress = LayoutInflater.from(this).inflate(R.layout.include_activity_progressbar, null);
-//            CircularProgressDrawable drawable = new CircularProgressDrawable(this);
-//            drawable.setStyle(CircularProgressDrawable.LARGE);
-//            drawable.setColorSchemeColors(AppUtils.getColor(R.color.colorPrimary));
-//            drawable.start();
-//            progress.setBackground(drawable);
         } else {
             // 避免重复添加的bug
             if (progress.getParent() != null || progress.getVisibility() == View.VISIBLE) {

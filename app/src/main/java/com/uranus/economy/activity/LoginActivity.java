@@ -8,10 +8,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import androidx.multidex.BuildConfig;
 
 import com.uranus.economy.ActivityLifecycleCallback;
 import com.uranus.economy.R;
@@ -27,9 +23,6 @@ import com.uranus.economy.util.LogUtils;
 import com.uranus.economy.util.Md5Utils;
 import com.uranus.economy.util.ToastUtils;
 
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -43,20 +36,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @BindView(R.id.mPassWord)
     protected EditText mPassWord;
 
-    @BindView(R.id.mVerificationCode)
-    protected EditText mVerificationCode;
-
-    @BindView(R.id.mVerificationImage)
-    protected ImageView mVerificationImage;
-
     @BindView(R.id.mLogin)
     protected Button mLogin;
-
-    @BindView(R.id.mLogin_test)
-    protected Button mLoginTest;
-
-    @BindView(R.id.verify_refresh)
-    protected TextView refreshVerify;
 
     private long mBackPressedTime;
     private int num = 0;
@@ -108,96 +89,33 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
             }
         });
-        mVerificationCode.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                checkInput();
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
 
         User saveUser = AppUtils.getUser(this.getApplicationContext());
         if (saveUser!=null&&!TextUtils.isEmpty(saveUser.no)){
             mUserName.setText(saveUser.no);
         }
-        mLoginTest.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                isOpen = true;
-                return true;
-            }
-        });
         if (TextUtils.isEmpty(AppUtils.getToken(this.getApplicationContext()))){
-            LogUtils.d1("ixintui_demo","LoginActivity get token==null");
-//            App.initIXinTui();
+            LogUtils.d1("demo","LoginActivity get token==null");
         }
     }
-
-//    private void showVerifyCode(){
-////        ImageLoad.displayImg(LoginActivity.this, mVerificationImage, REQUEST_FETCH_VERIFY+"?time="+System.currentTimeMillis());
-//        AppRequest.fetchVerify(REQUEST_FETCH_VERIFY, new VerifyCallback() {
-//            @Override
-//            public void onSuccess(final Bitmap bitmap) {
-//                AppOperator.runOnMainThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        mVerificationImage.setImageBitmap(bitmap);
-//                    }
-//                });
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
-//                ToastUtils.showShort(R.string.download_identify_code_error);
-//            }
-//        });
-//        refreshVerify.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ImageLoad.displayImg(LoginActivity.this, mVerificationImage, REQUEST_FETCH_VERIFY);
-//            }
-//        });
-//    }
 
     private void checkInput(){
         String name = mUserName.getText().toString();
         String pwd = mPassWord.getText().toString();
-        String verify = mVerificationCode.getText().toString();
 
-        if (TextUtils.isEmpty(name)||TextUtils.isEmpty(pwd)||TextUtils.isEmpty(verify)){
+        if (TextUtils.isEmpty(name)||TextUtils.isEmpty(pwd)){
             mLogin.setEnabled(false);
         }else {
             mLogin.setEnabled(true);
         }
     }
 
-    @OnClick({R.id.mVerificationImage,R.id.mLogin,R.id.mLogin_test,R.id.ll_login_view_root})
+    @OnClick({R.id.mLogin,R.id.ll_login_view_root})
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.mVerificationImage:
-//                showVerifyCode();
-                break;
             case R.id.mLogin:
                 toLogin();
-                break;
-            case R.id.mLogin_test:
-                if (BuildConfig.DEBUG && isOpen) {
-                    num +=1;
-                    if (num>=2){
-                        mUserName.setText("EMP00003");
-                        mPassWord.setText("888888");
-                    }
-                }
                 break;
             case R.id.ll_login_view_root:
                 //键盘收起
@@ -214,18 +132,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             return;
         }
         isLoading = true;
-        if (1==2){
-            router.router(MainActivity.class);
-            LoginActivity.this.finish();
-            return;
-        }
-//        String name = mUserName.getText().toString();
-//        String pwd = mPassWord.getText().toString();
-//        String verify = mVerificationCode.getText().toString();
-//        String token = AppUtils.getToken(LoginActivity.this.getApplicationContext());
+        String name = mUserName.getText().toString();
+        String pwd = mPassWord.getText().toString();
+
         router.router(MainActivity.class);
         LoginActivity.this.finish();
-//        AppRequest.login(REQUEST_LOGIN, name, Md5Utils.md5(pwd), verify , token,
+//        AppRequest.login(REQUEST_LOGIN, name, Md5Utils.md5(pwd),
 //                new RequestCallback<User>() {
 //                    @Override
 //                    public void onSuccess(User user) {
@@ -239,15 +151,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 //                    @Override
 //                    public void onError(ApiException e) {
 //                        isLoading = false;
-//                        switch (e.getCode()){
-//                            case CODE_IDENTITY_ERROR:
-//                                ToastUtils.showShort(R.string.identify_code_error);
-////                                showVerifyCode();
-//                                break;
-//                            default:
-//                                ToastUtils.showShort(R.string.account_password_error);
-//                                break;
-//                        }
+//                        ToastUtils.showShort(R.string.account_password_error);
 //                    }
 //                });
     }

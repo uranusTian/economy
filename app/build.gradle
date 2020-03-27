@@ -14,11 +14,37 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
+    signingConfigs {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            storeFile file(RELEASE_STOREFILE);
+            storePassword RELEASE_STORE_PASSWORD;
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PASSWORD
         }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false     //禁用混淆
+            multiDexEnabled true //防止方法数量超过65536导致错误
+            //指定混淆文件路径
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //指定商店密钥信息
+            signingConfig signingConfigs.debug
+        }
+        release {
+            minifyEnabled true   //是否代码混淆
+            multiDexEnabled true //防止方法数量超过65536导致错误
+            //指定混淆文件路径
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //Zipalign优化
+            zipAlignEnabled true
+            signingConfig signingConfigs.release
+            //移除无用的resource文件
+            shrinkResources true
+            buildConfigField("boolean", "SHOW_AUTO_LOGIN", "false")
+        }
+
     }
 
     compileOptions {
@@ -40,26 +66,6 @@ android {
         dev {
             dimension "env"
             buildConfigField 'String', 'HOST_URL_ADDRESS', '"http://192.168.10.195"'
-        }
-
-        local {
-            dimension "env"
-            buildConfigField 'String', 'HOST_URL_ADDRESS', '"http://192.168.10.195:20002"'
-        }
-
-        product {
-            dimension "env"
-            buildConfigField 'String', 'HOST_URL_ADDRESS', '"https://www.mediasuper.cn"'
-        }
-
-        pressure {
-            dimension "env"
-            buildConfigField 'String', 'HOST_URL_ADDRESS', '"http://114.67.233.202"'
-        }
-
-        v1 {
-            dimension "env"
-            buildConfigField 'String', 'HOST_URL_ADDRESS', '"http://v1.mediasuper.cn"'
         }
 
     }

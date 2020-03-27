@@ -95,53 +95,6 @@
             android:background="#949494" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="21dp"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/identifying_code"
-                android:textSize="14sp"
-                android:textColor="#505050"/>
-            <EditText
-                android:id="@+id/mVerificationCode"
-                android:hint="@string/enter_identifying_code_hint"
-                android:background="@null"
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="38dp"
-                android:singleLine="true"
-                android:maxLength="4"
-                android:textSize="14sp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="38dp" />
-            <ImageView
-                android:id="@+id/mVerificationImage"
-                android:layout_width="80dp"
-                android:layout_height="30dp" />
-            <TextView
-                android:id="@+id/verify_refresh"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:text="@string/refresh"
-                android:textSize="14sp"
-                android:textColor="@color/c_2a66fd"/>
-        </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginTop="14dp"
-            android:background="#949494"/>
-    </LinearLayout>
-
     <Button
         android:id="@+id/mLogin"
         android:layout_width="match_parent"
@@ -151,12 +104,7 @@
         android:background="@drawable/selecter_login_btn_bg"
         android:text="@string/login"
         android:textColor="@color/white" />
-    <Button
-        android:id="@+id/mLogin_test"
-        android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:layout_marginTop="40dp"
-        android:background="@null" />
+
 </LinearLayout>
 
 
