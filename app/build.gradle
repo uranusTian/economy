@@ -30,7 +30,7 @@ android {
             //指定混淆文件路径
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //指定商店密钥信息
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
         release {
             minifyEnabled true   //是否代码混淆

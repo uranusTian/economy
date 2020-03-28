@@ -2,6 +2,7 @@ package com.uranus.economy.base;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import androidx.multidex.BuildConfig;
@@ -23,6 +24,7 @@ public class App extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
+        Log.d("tian","DEBUG VALUE : " + BuildConfig.DEBUG);
         //内存泄漏安装
         LeakCanary.install(this);
         //启动Log打印
