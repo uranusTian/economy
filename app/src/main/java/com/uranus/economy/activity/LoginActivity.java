@@ -137,23 +137,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         router.router(MainActivity.class);
         LoginActivity.this.finish();
-//        AppRequest.login(REQUEST_LOGIN, name, Md5Utils.md5(pwd),
-//                new RequestCallback<User>() {
-//                    @Override
-//                    public void onSuccess(User user) {
-//                        isLoading = false;
-//                        UserManager.getInstance().loginSuccess(user);
-//                        AppUtils.saveUser(LoginActivity.this.getApplicationContext(), user);
-//                        router.router(MainActivity.class);
-//                        LoginActivity.this.finish();
-//                    }
-//
-//                    @Override
-//                    public void onError(ApiException e) {
-//                        isLoading = false;
-//                        ToastUtils.showShort(R.string.account_password_error);
-//                    }
-//                });
+        AppRequest.login(REQUEST_LOGIN, name, Md5Utils.md5(pwd),
+                new RequestCallback<User>() {
+                    @Override
+                    public void onSuccess(User user) {
+                        isLoading = false;
+                        UserManager.getInstance().loginSuccess(user);
+                        AppUtils.saveUser(LoginActivity.this.getApplicationContext(), user);
+                        router.router(MainActivity.class);
+                        LoginActivity.this.finish();
+                    }
+
+                    @Override
+                    public void onError(ApiException e) {
+                        isLoading = false;
+                        ToastUtils.showShort(R.string.account_password_error);
+                    }
+                });
     }
 
     @Override

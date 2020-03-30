@@ -25,6 +25,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     public void routerActivity(long delayTime) {
+
         AppOperator.runOnMainThreadDelay(new Runnable() {
             @Override
             public void run() {
@@ -36,6 +37,7 @@ public class SplashActivity extends BaseActivity {
                 SplashActivity.this.finish();
             }
         }, delayTime);
+
     }
 
     @Override

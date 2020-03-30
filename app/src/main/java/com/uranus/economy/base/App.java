@@ -2,15 +2,14 @@ package com.uranus.economy.base;
 
 import android.app.ActivityManager;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.util.Log;
 
-import androidx.multidex.BuildConfig;
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
 import com.squareup.leakcanary.LeakCanary;
 import com.uranus.economy.ActivityLifecycleCallback;
+import com.uranus.economy.BuildConfig;
 import com.uranus.economy.util.CrashHandler;
 import com.uranus.economy.util.LogUtils;
 
@@ -24,11 +23,14 @@ public class App extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
-        Log.d("tian","DEBUG VALUE : " + BuildConfig.DEBUG);
-        //内存泄漏安装
-        LeakCanary.install(this);
-        //启动Log打印
-        LogUtils.setEnable(true);
+        if(BuildConfig.DEBUG){
+            Log.d("test","LeakCanary.install");
+            //内存泄漏安装
+            LeakCanary.install(this);
+            LeakCanary.enableDisplayLeakActivity(this);
+            //启动Log打印
+            LogUtils.setEnable(true);
+        }
         //突破655535方法数量限制
         MultiDex.install(this);
         LogUtils.d1(TAG, "--onCreate--");

@@ -26,6 +26,7 @@ public class MainActivity extends BaseActivity implements NavFragment.OnNavigati
         FragmentManager manager = getSupportFragmentManager();
         mNavBar = ((NavFragment) manager.findFragmentById(R.id.fag_nav));
         mNavBar.setup(this, manager, R.id.main_container, this);
+
     }
 
     @Override
