@@ -34,6 +34,11 @@ public class ScreenUtil {
         return (int) (dpValue * scale + 0.5f);
     }
 
+    public static int sp2px(float spValue) {
+        final float fontScale = App.context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (spValue * fontScale + 0.5f);
+    }
+
 
     /**
      * px -> dp

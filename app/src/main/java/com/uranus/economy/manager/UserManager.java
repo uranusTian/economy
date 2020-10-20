@@ -18,8 +18,6 @@ public class UserManager {
 
     private User loginUser;
 
-//    private List<ChannelAccountBean> channelAccountBeans = new ArrayList<>();
-
     private UserManager() {
 
     }

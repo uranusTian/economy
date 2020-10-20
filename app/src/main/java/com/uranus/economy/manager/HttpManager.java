@@ -10,9 +10,6 @@ import com.uranus.economy.Global;
 import com.uranus.economy.base.App;
 import com.uranus.economy.bean.BaseBean;
 import com.uranus.economy.convert.CustomGsonConverterFactory;
-import com.uranus.economy.cookie.CookieJarImpl;
-import com.uranus.economy.cookie.OkHttpCache;
-import com.uranus.economy.cookie.PersistentCookieStore;
 import com.uranus.economy.network.ApiException;
 import com.uranus.economy.network.LoggingInterceptor;
 import com.uranus.economy.network.PublicParams;
@@ -34,10 +31,7 @@ import javax.net.ssl.TrustManagerFactory;
 
 import io.reactivex.functions.Function;
 import okhttp3.Cache;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
-import okhttp3.RequestBody;
 import retrofit2.Retrofit;
 
 /**
@@ -67,9 +61,6 @@ public class HttpManager {
                 .sslSocketFactory(EconomyAllCerts.createSSLSocketFactory())
                 .hostnameVerifier(new EconomyAllCerts.TrustAllHostnameVerifier())
                 .cache(cache)//缓存路径&大小
-                .cookieJar(new CookieJarImpl(new PersistentCookieStore(App.context)))
-                .addNetworkInterceptor(new OkHttpCache())//缓存策略
-                .addInterceptor(new OkHttpCache())//缓存策略
                 .addInterceptor(new PublicParams());//公共参数
 
 
