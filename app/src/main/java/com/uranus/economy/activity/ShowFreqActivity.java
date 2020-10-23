@@ -16,6 +16,7 @@ import android.widget.EditText;
 
 import com.uranus.economy.R;
 import com.uranus.economy.base.BaseActivity;
+import com.uranus.economy.util.Util;
 import com.uranus.economy.views.CoordinateView;
 
 import butterknife.BindView;
@@ -46,8 +47,8 @@ public class ShowFreqActivity extends BaseActivity {
     private void refreshPic(){
         String freq = centerFreq.getText().toString();
         String bandwidth = bandwidthEdit.getText().toString();
-        long freqLong = 7000;
-        long bandwidthLong = 1000;
+        long freqLong = 70000000;
+        long bandwidthLong = 10000000;
         if(!TextUtils.isEmpty(freq)){
             try {
                 freqLong = Long.parseLong(freq.replace(",", ""));
@@ -77,22 +78,10 @@ public class ShowFreqActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                refreshPic();
                 if (count != before) {
-                    String sss = "";
                     String string = s.toString().replace(",", "");
-                    int b = string.length() / 3;
+                    String sss = Util.longToInternal(string);
                     if (string.length() >= 3 ) {
-                        int yushu = string.length() % 3;
-                        if (yushu == 0) {
-                            b = string.length() / 3 - 1;
-                            yushu = 3;
-                        }
-                        for (int i = 0; i < b; i++) {
-                            sss = sss + string.substring(0, yushu) + "," + string.substring(yushu, 3);
-                            string = string.substring(3, string.length());
-                        }
-                        sss = sss + string;
                         centerFreq.setText(sss);
                     }
                     refreshPic();
@@ -115,20 +104,9 @@ public class ShowFreqActivity extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (count != before) {
-                    String sss = "";
                     String string = s.toString().replace(",", "");
-                    int b = string.length() / 3;
+                    String sss = Util.longToInternal(string);
                     if (string.length() >= 3 ) {
-                        int yushu = string.length() % 3;
-                        if (yushu == 0) {
-                            b = string.length() / 3 - 1;
-                            yushu = 3;
-                        }
-                        for (int i = 0; i < b; i++) {
-                            sss = sss + string.substring(0, yushu) + "," + string.substring(yushu, 3);
-                            string = string.substring(3, string.length());
-                        }
-                        sss = sss + string;
                         bandwidthEdit.setText(sss);
                     }
                     refreshPic();

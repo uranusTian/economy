@@ -4,21 +4,24 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 
 import com.uranus.economy.util.ScreenUtil;
+import com.uranus.economy.util.Util;
 
 public class CoordinateView extends View {
 
-    private int viewHeight = 300;
-    private long freq = 700000;
-    private long showValue = 500000;
+    private int viewHeight = 250;
+    private long freq = 70000000;
+    private long showValue = 40000000;
+    private String showValueStr = "40,000,000";
 
-    private long bandwidth = 1000;
-    private long showBandwidth = 1000;
+    private long bandwidth = 10000000;
+    private long showBandwidth = 10000000;
 
     public void setFreq(long freq, long bandwidth){
         this.freq = freq;
@@ -30,13 +33,14 @@ public class CoordinateView extends View {
         }
         if(tempFreq <= 1){
             showValue = rate;
-        } else if (tempFreq <= 2){
+        } else if (tempFreq <= 3){
             showValue = 2 * rate;
         } else if (tempFreq <= 7){
-            showValue = 5 * rate;
+            showValue = 4 * rate;
         } else {
             showValue = 10 * rate;
         }
+        showValueStr = Util.longToInternal(showValue + "");
 
         this.bandwidth = bandwidth;
         long tempbandwidth = bandwidth;
@@ -50,7 +54,7 @@ public class CoordinateView extends View {
         } else if (tempbandwidth <= 2){
             showBandwidth = 2 * rateBand;
         } else if (tempbandwidth <= 7){
-            showBandwidth = 5 * rateBand;
+            showBandwidth = 4 * rateBand;
         } else {
             showBandwidth = 10 * rateBand;
         }
@@ -104,8 +108,10 @@ public class CoordinateView extends View {
 //        canvas.drawText("" + showBandwidth, getWidth()/2 + ScreenUtil.dp2px(10),
 //                ScreenUtil.dp2px(viewHeight/2), mPaint);
 
-        int scalHeight = (int)(bandwidth * ScreenUtil.dp2px(100) / showBandwidth);
-        int scalY = ScreenUtil.dp2px(viewHeight - 50) - scalHeight;
+//        int scalHeight = (int)(bandwidth * ScreenUtil.dp2px(100) / showBandwidth);
+//        int scalY = ScreenUtil.dp2px(viewHeight - 50) - scalHeight;
+        int scalHeight = ScreenUtil.dp2px(100);
+        int scalY = ScreenUtil.dp2px(viewHeight - 50)- scalHeight;;
 
         for(int i = 1;i <= 8; i++){
             int largeScalStartX = i * perLargeScal;
@@ -115,13 +121,16 @@ public class CoordinateView extends View {
             canvas.drawLine(largeScalStartX,largeScalStartY,largeScalEndX,largeScalEndY,mPaint);
         }
 
-        int value1X = perLargeScal * 2 - ScreenUtil.dp2px(10f);
-        int value2X = perLargeScal * 6 - ScreenUtil.dp2px(10f);
-        int valueY = ScreenUtil.dp2px(viewHeight - 20);
+
 
         if(showValue > 0){
-            canvas.drawText("-" + showValue, value1X,valueY, mPaint);
-            canvas.drawText("" + showValue, value2X,valueY, mPaint);
+            mPaint.setTextSize(ScreenUtil.sp2px(10));
+            int textOffset = ScreenUtil.dp2px(showValueStr.length() * 3);
+            int value1X = perLargeScal * 2 - textOffset;
+            int value2X = perLargeScal * 6 - textOffset;
+            int valueY = ScreenUtil.dp2px(viewHeight - 25);
+            canvas.drawText("-" + showValueStr, value1X,valueY, mPaint);
+            canvas.drawText("" + showValueStr, value2X,valueY, mPaint);
         }
 
         mPaint.setStrokeWidth((float) 1.0);
@@ -135,44 +144,72 @@ public class CoordinateView extends View {
 
         int trapMinusMidX = getWidth() / 2 - (int)(freq * getWidth() / showValue) /4;
         int trapPlusMidX = getWidth() / 2 + (int)(freq * getWidth() / showValue) /4;
+        long trapWidthLong = bandwidth * getWidth() / showValue / 4;
+//        int trapWidth = (int)(bandwidth * getWidth() / showValue / 4);
+        int trapWidth = 2;
+        if(trapWidthLong >= getWidth()){
+            trapWidth = getWidth();
+        } else if(trapWidthLong <= 2){
+            trapWidth = 2;
+        } else {
+            trapWidth = (int)trapWidthLong;
+        }
 
-        int trapMinusX1 = trapMinusMidX - perSmallScal * 2;
+        int trapMinusX1 = trapMinusMidX - trapWidth / 2;
         int trapMinusY1 = ScreenUtil.dp2px(viewHeight - 50);
 
-        int trapMinusX2 = trapMinusMidX + perSmallScal * 2;
+        int trapMinusX2 = trapMinusMidX + trapWidth / 2;
         int trapMinusY2 = ScreenUtil.dp2px(viewHeight - 50);
 
-        int trapMinusX3 = trapMinusMidX + perSmallScal * 2;
+        int trapMinusX3 = trapMinusMidX + trapWidth / 2;
         int trapMinusY3 = scalY;
 
-        int trapMinusX4 = trapMinusMidX - perSmallScal * 2;
+        int trapMinusX4 = trapMinusMidX - trapWidth / 2;
         int trapMinusY4 = scalY + ScreenUtil.dp2px(20);
 
+        Path path=new Path();                                 //初始化路径（用于填充颜色）
+        path.moveTo(trapMinusX1,trapMinusY1);                           //路径移动到第一个点（从点 1 开始）
+        path.lineTo(trapMinusX2,trapMinusY2);                           //路径直线到第二个点
+        path.lineTo(trapMinusX3,trapMinusY3);                           //路径直线到第四个点
+        path.lineTo(trapMinusX4,trapMinusY4);                           //路径直线到第三个点
+        path.lineTo(trapMinusX1,trapMinusY1);                           //路径直线到第一个点（闭合形成四边形）
         mPaint.setColor(Color.parseColor("#00008B"));
-        mPaint.setStrokeWidth((float) 3.0);
-        canvas.drawLine(trapMinusX1,trapMinusY1,trapMinusX2,trapMinusY2,mPaint);
-        canvas.drawLine(trapMinusX2,trapMinusY2,trapMinusX3,trapMinusY3,mPaint);
-        canvas.drawLine(trapMinusX3,trapMinusY3,trapMinusX4,trapMinusY4,mPaint);
-        canvas.drawLine(trapMinusX4,trapMinusY4,trapMinusX1,trapMinusY1,mPaint);
+        canvas.drawPath(path,mPaint);
 
-        int trapPlusX1 = trapPlusMidX - perSmallScal * 2;
+//        mPaint.setColor(Color.parseColor("#00008B"));
+//        mPaint.setStrokeWidth((float) 3.0);
+//        canvas.drawLine(trapMinusX1,trapMinusY1,trapMinusX2,trapMinusY2,mPaint);
+//        canvas.drawLine(trapMinusX2,trapMinusY2,trapMinusX3,trapMinusY3,mPaint);
+//        canvas.drawLine(trapMinusX3,trapMinusY3,trapMinusX4,trapMinusY4,mPaint);
+//        canvas.drawLine(trapMinusX4,trapMinusY4,trapMinusX1,trapMinusY1,mPaint);
+
+        int trapPlusX1 = trapPlusMidX - trapWidth / 2;
         int trapPlusY1 = ScreenUtil.dp2px(viewHeight - 50);
 
-        int trapPlusX2 = trapPlusMidX + perSmallScal * 2;
+        int trapPlusX2 = trapPlusMidX + trapWidth / 2;
         int trapPlusY2 = ScreenUtil.dp2px(viewHeight - 50);
 
-        int trapPlusX3 = trapPlusMidX + perSmallScal * 2;
+        int trapPlusX3 = trapPlusMidX + trapWidth / 2;
         int trapPlusY3 = scalY + ScreenUtil.dp2px(20);
 
-        int trapPlusX4 = trapPlusMidX - perSmallScal * 2;
+        int trapPlusX4 = trapPlusMidX - trapWidth / 2;
         int trapPlusY4 = scalY;
 
+        Path path2=new Path();                                 //初始化路径（用于填充颜色）
+        path2.moveTo(trapPlusX1,trapPlusY1);                           //路径移动到第一个点（从点 1 开始）
+        path2.lineTo(trapPlusX2,trapPlusY2);                           //路径直线到第二个点
+        path2.lineTo(trapPlusX3,trapPlusY3);                           //路径直线到第四个点
+        path2.lineTo(trapPlusX4,trapPlusY4);                           //路径直线到第三个点
+        path2.lineTo(trapPlusX1,trapPlusY1);                           //路径直线到第一个点（闭合形成四边形）
         mPaint.setColor(Color.parseColor("#FF0000"));
-        mPaint.setStrokeWidth((float) 3.0);
-        canvas.drawLine(trapPlusX1,trapPlusY1,trapPlusX2,trapPlusY2,mPaint);
-        canvas.drawLine(trapPlusX2,trapPlusY2,trapPlusX3,trapPlusY3,mPaint);
-        canvas.drawLine(trapPlusX3,trapPlusY3,trapPlusX4,trapPlusY4,mPaint);
-        canvas.drawLine(trapPlusX4,trapPlusY4,trapPlusX1,trapPlusY1,mPaint);
+        canvas.drawPath(path2,mPaint);
+
+//        mPaint.setColor(Color.parseColor("#FF0000"));
+//        mPaint.setStrokeWidth((float) 3.0);
+//        canvas.drawLine(trapPlusX1,trapPlusY1,trapPlusX2,trapPlusY2,mPaint);
+//        canvas.drawLine(trapPlusX2,trapPlusY2,trapPlusX3,trapPlusY3,mPaint);
+//        canvas.drawLine(trapPlusX3,trapPlusY3,trapPlusX4,trapPlusY4,mPaint);
+//        canvas.drawLine(trapPlusX4,trapPlusY4,trapPlusX1,trapPlusY1,mPaint);
 
     }
 }

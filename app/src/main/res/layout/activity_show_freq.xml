@@ -14,7 +14,7 @@
         <com.uranus.economy.views.CoordinateView
             android:id="@+id/pic1"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="250dp"
             android:background="#ffffff" />
 
         <LinearLayout
@@ -32,7 +32,7 @@
                 android:id="@+id/center_freq"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:hint="7,000"
+                android:hint="70,000,000"
                 android:imeOptions="actionDone"
                 android:inputType="number" />
         </LinearLayout>
@@ -52,7 +52,7 @@
                 android:id="@+id/bandwidth"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:hint="1,000"
+                android:hint="10,000,000"
                 android:imeOptions="actionDone"
                 android:inputType="number" />
         </LinearLayout>
