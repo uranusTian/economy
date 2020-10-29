@@ -17,6 +17,12 @@
             android:layout_height="200dp"
             android:background="#ffffff" />
 
+        <com.uranus.economy.views.PeriodView
+            android:id="@+id/pic2"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="#ffffff" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,6 +59,25 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="10,000,000"
+                android:imeOptions="actionDone"
+                android:inputType="number" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="采样频率：" />
+
+            <EditText
+                android:id="@+id/sampling_freq"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="21,538,461"
                 android:imeOptions="actionDone"
                 android:inputType="number" />
         </LinearLayout>

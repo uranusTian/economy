@@ -19,5 +19,16 @@ public class Util {
         }
         return sss;
     }
+
+    public static long getDefSampFreq(long freqLong, long bandwidthLong){
+        if(freqLong > 0 && bandwidthLong > 0){
+            int numN = 0;
+            while(2 * freqLong/(2 * numN + 1) >= bandwidthLong){
+                numN++;
+            }
+             return 4 * freqLong/(2 * numN + 1);
+        }
+        return 1;
+    }
 }
 

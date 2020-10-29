@@ -81,7 +81,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected boolean isShowWaterMark() {
-        return true;
+        return false;
     }
 
     protected void toolBarSetting(BaseToolBar toolBar) {
