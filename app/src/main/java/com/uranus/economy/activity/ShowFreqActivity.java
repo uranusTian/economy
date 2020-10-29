@@ -70,21 +70,20 @@ public class ShowFreqActivity extends BaseActivity {
             } catch (Exception e){
             }
         }
-        long samplingFreq = 1;
+        long samplingFreqLong = 1;
         if(TextUtils.isEmpty(samplingFreqVal)){
-            Log.d("tian", "getDefSampFreq : " + freqLong + " , " + bandwidthLong);
-            samplingFreq = Util.getDefSampFreq(freqLong,bandwidthLong);
+            samplingFreqLong = Util.getDefSampFreq(freqLong,bandwidthLong);
+            String sss = Util.longToInternal(samplingFreqLong + "");
+            samplingFreq.setHint(sss);
         } else {
             try {
-                Log.d("tian", "samplingFreqVal : " + samplingFreqVal);
-                samplingFreq = Long.parseLong(samplingFreqVal.replace(",", ""));
-                Log.d("tian", "samplingFreq : " + samplingFreq);
+                samplingFreqLong = Long.parseLong(samplingFreqVal.replace(",", ""));
             } catch (Exception e){
             }
         }
         pic1.setFreq(freqLong,bandwidthLong);
         pic1.invalidate();
-        pic2.setFreq(freqLong,bandwidthLong,samplingFreq);
+        pic2.setFreq(freqLong,bandwidthLong,samplingFreqLong);
         pic2.invalidate();
     }
 
