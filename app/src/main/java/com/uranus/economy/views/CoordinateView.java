@@ -15,7 +15,8 @@ import com.uranus.economy.util.Util;
 
 public class CoordinateView extends View {
 
-    private int viewHeight = 250;
+    private int viewHeight = 200;
+    private int viewBottomHeight = 30;
     private long freq = 70000000;
     private long showValue = 40000000;
     private String showValueStr = "40,000,000";
@@ -78,20 +79,20 @@ public class CoordinateView extends View {
         super.onDraw(canvas);
         int xStartX = ScreenUtil.dp2px(0);
         int xEndX = getWidth();
-        int xStartY = ScreenUtil.dp2px(viewHeight - 50);
-        int xEndY = ScreenUtil.dp2px(viewHeight - 50);
+        int xStartY = ScreenUtil.dp2px(viewHeight - viewBottomHeight);
+        int xEndY = ScreenUtil.dp2px(viewHeight - viewBottomHeight);
         mPaint.setColor(Color.parseColor("#000000"));
         mPaint.setStrokeWidth((float) 2.0);
         canvas.drawLine(xStartX,xStartY,xEndX,xEndY,mPaint);
         int yStartX = getWidth() / 2;
         int yEndX = getWidth() / 2;
-        int yStartY = ScreenUtil.dp2px(50f);
+        int yStartY = ScreenUtil.dp2px(viewBottomHeight);
         int yEndY = ScreenUtil.dp2px(viewHeight);
         canvas.drawLine(yStartX,yStartY,yEndX,yEndY,mPaint);
 
-        String text="Y轴";
-        mPaint.setTextSize(ScreenUtil.sp2px(20));
-        canvas.drawText(text, getWidth() / 2,ScreenUtil.dp2px(40f), mPaint);
+//        String text="Y轴";
+//        mPaint.setTextSize(ScreenUtil.sp2px(20));
+//        canvas.drawText(text, getWidth() / 2,ScreenUtil.dp2px(40f), mPaint);
 
         int perSmallScal = getWidth() / 40;
         int perLargeScal = getWidth() / 8;
@@ -111,13 +112,13 @@ public class CoordinateView extends View {
 //        int scalHeight = (int)(bandwidth * ScreenUtil.dp2px(100) / showBandwidth);
 //        int scalY = ScreenUtil.dp2px(viewHeight - 50) - scalHeight;
         int scalHeight = ScreenUtil.dp2px(100);
-        int scalY = ScreenUtil.dp2px(viewHeight - 50)- scalHeight;;
+        int scalY = ScreenUtil.dp2px(viewHeight - viewBottomHeight)- scalHeight;;
 
         for(int i = 1;i <= 8; i++){
             int largeScalStartX = i * perLargeScal;
             int largeScalEndX = i * perLargeScal;
-            int largeScalStartY = ScreenUtil.dp2px(viewHeight - 50);
-            int largeScalEndY = ScreenUtil.dp2px(viewHeight - 40);
+            int largeScalStartY = ScreenUtil.dp2px(viewHeight - viewBottomHeight);
+            int largeScalEndY = ScreenUtil.dp2px(viewHeight - viewBottomHeight + 10);
             canvas.drawLine(largeScalStartX,largeScalStartY,largeScalEndX,largeScalEndY,mPaint);
         }
 
@@ -128,7 +129,7 @@ public class CoordinateView extends View {
             int textOffset = ScreenUtil.dp2px(showValueStr.length() * 3);
             int value1X = perLargeScal * 2 - textOffset;
             int value2X = perLargeScal * 6 - textOffset;
-            int valueY = ScreenUtil.dp2px(viewHeight - 25);
+            int valueY = ScreenUtil.dp2px(viewHeight - viewBottomHeight + 25);
             canvas.drawText("-" + showValueStr, value1X,valueY, mPaint);
             canvas.drawText("" + showValueStr, value2X,valueY, mPaint);
         }
@@ -137,8 +138,8 @@ public class CoordinateView extends View {
         for(int i = 1;i <= 40; i++){
             int smallScalStartX = i * perSmallScal;
             int smallScalEndX = i * perSmallScal;
-            int smallScalStartY = ScreenUtil.dp2px(viewHeight - 50);
-            int smallScalEndY = ScreenUtil.dp2px(viewHeight - 45);
+            int smallScalStartY = ScreenUtil.dp2px(viewHeight - viewBottomHeight);
+            int smallScalEndY = ScreenUtil.dp2px(viewHeight - viewBottomHeight + 5);
             canvas.drawLine(smallScalStartX,smallScalStartY,smallScalEndX,smallScalEndY,mPaint);
         }
 
@@ -156,10 +157,10 @@ public class CoordinateView extends View {
         }
 
         int trapMinusX1 = trapMinusMidX - trapWidth / 2;
-        int trapMinusY1 = ScreenUtil.dp2px(viewHeight - 50);
+        int trapMinusY1 = ScreenUtil.dp2px(viewHeight - viewBottomHeight);
 
         int trapMinusX2 = trapMinusMidX + trapWidth / 2;
-        int trapMinusY2 = ScreenUtil.dp2px(viewHeight - 50);
+        int trapMinusY2 = ScreenUtil.dp2px(viewHeight - viewBottomHeight);
 
         int trapMinusX3 = trapMinusMidX + trapWidth / 2;
         int trapMinusY3 = scalY;
@@ -184,10 +185,10 @@ public class CoordinateView extends View {
 //        canvas.drawLine(trapMinusX4,trapMinusY4,trapMinusX1,trapMinusY1,mPaint);
 
         int trapPlusX1 = trapPlusMidX - trapWidth / 2;
-        int trapPlusY1 = ScreenUtil.dp2px(viewHeight - 50);
+        int trapPlusY1 = ScreenUtil.dp2px(viewHeight - viewBottomHeight);
 
         int trapPlusX2 = trapPlusMidX + trapWidth / 2;
-        int trapPlusY2 = ScreenUtil.dp2px(viewHeight - 50);
+        int trapPlusY2 = ScreenUtil.dp2px(viewHeight - viewBottomHeight);
 
         int trapPlusX3 = trapPlusMidX + trapWidth / 2;
         int trapPlusY3 = scalY + ScreenUtil.dp2px(20);
