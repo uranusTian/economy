@@ -14,14 +14,24 @@
         <com.uranus.economy.views.CoordinateView
             android:id="@+id/pic1"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:background="#ffffff" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="带通信号频谱" />
 
         <com.uranus.economy.views.PeriodView
             android:id="@+id/pic2"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:background="#ffffff" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="带通信号频谱的周期延拓" />
 
         <LinearLayout
             android:layout_width="match_parent"

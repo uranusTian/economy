@@ -26,7 +26,13 @@ public class Util {
             while(2 * freqLong/(2 * numN + 1) >= bandwidthLong){
                 numN++;
             }
-             return 4 * freqLong/(2 * numN + 1);
+            numN--;
+            long res = 4 * freqLong/(2 * numN + 1);
+            if(res >= 2 * bandwidthLong){
+                return res;
+            } else {
+                return 2 * bandwidthLong;
+            }
         }
         return 1;
     }

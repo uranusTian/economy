@@ -16,7 +16,7 @@ import com.uranus.economy.util.Util;
 
 public class PeriodView extends View {
 
-    private int viewHeight = 200;
+    private int viewHeight = 150;
     private int viewBottomHeight = 30;
     private long freq = 70000000;
     private long bandwidth = 10000000;

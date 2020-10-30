@@ -15,7 +15,7 @@ import com.uranus.economy.util.Util;
 
 public class CoordinateView extends View {
 
-    private int viewHeight = 200;
+    private int viewHeight = 150;
     private int viewBottomHeight = 30;
     private long freq = 70000000;
     private long showValue = 40000000;
