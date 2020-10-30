@@ -12,7 +12,7 @@
         android:textColor="@color/c_fff"
         android:textSize="24sp"
         android:layout_marginBottom="76dp"
-        android:text="this is splash page"/>
+        android:text="4C1K-WXY"/>
 
 
 </FrameLayout>

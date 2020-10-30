@@ -1,5 +1,6 @@
 package com.uranus.economy.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -14,6 +15,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.uranus.economy.R;
 import com.uranus.economy.base.BaseActivity;
@@ -41,6 +43,12 @@ public class ShowFreqActivity extends BaseActivity {
     @BindView(R.id.pic2)
     protected PeriodView pic2;
 
+    @BindView(R.id.is_mix_text)
+    protected TextView isMixText;
+
+    @BindView(R.id.is_mix_view)
+    protected View isMixView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,29 +63,29 @@ public class ShowFreqActivity extends BaseActivity {
         String freq = centerFreq.getText().toString();
         String bandwidth = bandwidthEdit.getText().toString();
         String samplingFreqVal = samplingFreq.getText().toString();
-        long freqLong = 70000000;
-        long bandwidthLong = 10000000;
+        double freqLong = 70000000;
+        double bandwidthLong = 10000000;
         if(!TextUtils.isEmpty(freq)){
             try {
-                freqLong = Long.parseLong(freq.replace(",", ""));
+                freqLong = Double.parseDouble(freq.replace(",", ""));
             } catch (Exception e){
             }
 
         }
         if(!TextUtils.isEmpty(bandwidth)){
             try {
-                bandwidthLong = Long.parseLong(bandwidth.replace(",", ""));
+                bandwidthLong = Double.parseDouble(bandwidth.replace(",", ""));
             } catch (Exception e){
             }
         }
-        long samplingFreqLong = 1;
+        double samplingFreqLong = 1;
         if(TextUtils.isEmpty(samplingFreqVal)){
             samplingFreqLong = Util.getDefSampFreq(freqLong,bandwidthLong);
-            String sss = Util.longToInternal(samplingFreqLong + "");
+            String sss = Util.doubleToInternal(Util.doubleToStr(samplingFreqLong));
             samplingFreq.setHint(sss);
         } else {
             try {
-                samplingFreqLong = Long.parseLong(samplingFreqVal.replace(",", ""));
+                samplingFreqLong = Double.parseDouble(samplingFreqVal.replace(",", ""));
             } catch (Exception e){
             }
         }
@@ -85,6 +93,14 @@ public class ShowFreqActivity extends BaseActivity {
         pic1.invalidate();
         pic2.setFreq(freqLong,bandwidthLong,samplingFreqLong);
         pic2.invalidate();
+        boolean isMix = Util.isMix(freqLong,bandwidthLong,samplingFreqLong);
+        if(isMix){
+            isMixText.setText("是");
+            isMixView.setBackgroundColor(Color.parseColor("#DC143C"));
+        } else {
+            isMixText.setText("否");
+            isMixView.setBackgroundColor(Color.parseColor("#00FF00"));
+        }
     }
 
     @Override
@@ -99,7 +115,7 @@ public class ShowFreqActivity extends BaseActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (count != before) {
                     String string = s.toString().replace(",", "");
-                    String sss = Util.longToInternal(string);
+                    String sss = Util.doubleToInternal(string);
                     if (string.length() >= 3 ) {
                         centerFreq.setText(sss);
                     }
@@ -124,7 +140,7 @@ public class ShowFreqActivity extends BaseActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (count != before) {
                     String string = s.toString().replace(",", "");
-                    String sss = Util.longToInternal(string);
+                    String sss = Util.doubleToInternal(string);
                     if (string.length() >= 3 ) {
                         bandwidthEdit.setText(sss);
                     }
@@ -149,7 +165,7 @@ public class ShowFreqActivity extends BaseActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (count != before) {
                     String string = s.toString().replace(",", "");
-                    String sss = Util.longToInternal(string);
+                    String sss = Util.doubleToInternal(string);
                     if (string.length() >= 3 ) {
                         samplingFreq.setText(sss);
                     }

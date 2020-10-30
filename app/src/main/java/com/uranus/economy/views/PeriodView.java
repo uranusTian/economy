@@ -18,11 +18,11 @@ public class PeriodView extends View {
 
     private int viewHeight = 150;
     private int viewBottomHeight = 30;
-    private long freq = 70000000;
-    private long bandwidth = 10000000;
-    private long samplingFreq = 21538461;
+    private double freq = 70000000;
+    private double bandwidth = 10000000;
+    private double samplingFreq = 21538461;
 
-    private long showValue = 40000000;
+    private double showValue = 40000000;
     private String showValueStr = "40,000,000";
 
     private Paint mPaint = new Paint();
@@ -37,13 +37,13 @@ public class PeriodView extends View {
         mPaint.setColor(Color.parseColor("#000000"));
     }
 
-    public void setFreq(long freq, long bandwidth, long samplingFreq){
+    public void setFreq(double freq, double bandwidth, double samplingFreq){
         this.freq = freq;
         this.bandwidth = bandwidth;
         this.samplingFreq = samplingFreq;
 
-        long tempFreq = freq;
-        long rate = 1;
+        double tempFreq = freq;
+        double rate = 1;
         while(tempFreq >= 10){
             rate *= 10;
             tempFreq = tempFreq / 10;
@@ -57,11 +57,11 @@ public class PeriodView extends View {
         } else {
             showValue = 10 * rate;
         }
-        showValueStr = Util.longToInternal(showValue + "");
+        showValueStr = Util.doubleToInternal(Util.doubleToStr(showValue));
 
         this.bandwidth = bandwidth;
-        long tempbandwidth = bandwidth;
-        long rateBand = 1;
+        double tempbandwidth = bandwidth;
+        double rateBand = 1;
         while(tempbandwidth >= 10){
             rateBand *= 10;
             tempbandwidth = tempbandwidth / 10;
@@ -137,7 +137,7 @@ public class PeriodView extends View {
 
         int trapMinusMidXTrue = getWidth() / 2 - (int)(freq * getWidth() / showValue) /4;
         int trapPlusMidXTrue = getWidth() / 2 + (int)(freq * getWidth() / showValue) /4;
-        long trapWidthLong = bandwidth * getWidth() / showValue / 4;
+        double trapWidthLong = bandwidth * getWidth() / showValue / 4;
 //        int trapWidth = (int)(bandwidth * getWidth() / showValue / 4);
         int trapWidth = 2;
         if(trapWidthLong >= getWidth()){
@@ -173,7 +173,7 @@ public class PeriodView extends View {
             path.lineTo(trapMinusX3,trapMinusY3);                           //路径直线到第四个点
             path.lineTo(trapMinusX4,trapMinusY4);                           //路径直线到第三个点
             path.lineTo(trapMinusX1,trapMinusY1);                           //路径直线到第一个点（闭合形成四边形）
-            mPaint.setColor(Color.parseColor("#00008B"));
+            mPaint.setColor(Color.parseColor("#A600008B"));
             canvas.drawPath(path,mPaint);
 
             int trapPlusX1 = trapPlusMidX - trapWidth / 2;
@@ -194,7 +194,7 @@ public class PeriodView extends View {
             path2.lineTo(trapPlusX3,trapPlusY3);                           //路径直线到第四个点
             path2.lineTo(trapPlusX4,trapPlusY4);                           //路径直线到第三个点
             path2.lineTo(trapPlusX1,trapPlusY1);                           //路径直线到第一个点（闭合形成四边形）
-            mPaint.setColor(Color.parseColor("#FF0000"));
+            mPaint.setColor(Color.parseColor("#A6FF0000"));
             canvas.drawPath(path2,mPaint);
         }
 

@@ -17,17 +17,17 @@ public class CoordinateView extends View {
 
     private int viewHeight = 150;
     private int viewBottomHeight = 30;
-    private long freq = 70000000;
-    private long showValue = 40000000;
+    private double freq = 70000000;
+    private double showValue = 40000000;
     private String showValueStr = "40,000,000";
 
-    private long bandwidth = 10000000;
-    private long showBandwidth = 10000000;
+    private double bandwidth = 10000000;
+    private double showBandwidth = 10000000;
 
-    public void setFreq(long freq, long bandwidth){
+    public void setFreq(double freq, double bandwidth){
         this.freq = freq;
-        long tempFreq = freq;
-        long rate = 1;
+        double tempFreq = freq;
+        double rate = 1;
         while(tempFreq >= 10){
             rate *= 10;
             tempFreq = tempFreq / 10;
@@ -41,11 +41,11 @@ public class CoordinateView extends View {
         } else {
             showValue = 10 * rate;
         }
-        showValueStr = Util.longToInternal(showValue + "");
+        showValueStr = Util.doubleToInternal(Util.doubleToStr(showValue));
 
         this.bandwidth = bandwidth;
-        long tempbandwidth = bandwidth;
-        long rateBand = 1;
+        double tempbandwidth = bandwidth;
+        double rateBand = 1;
         while(tempbandwidth >= 10){
             rateBand *= 10;
             tempbandwidth = tempbandwidth / 10;
@@ -132,6 +132,7 @@ public class CoordinateView extends View {
             int valueY = ScreenUtil.dp2px(viewHeight - viewBottomHeight + 25);
             canvas.drawText("-" + showValueStr, value1X,valueY, mPaint);
             canvas.drawText("" + showValueStr, value2X,valueY, mPaint);
+            canvas.drawText("0", perLargeScal * 4 + ScreenUtil.dp2px(10),valueY, mPaint);
         }
 
         mPaint.setStrokeWidth((float) 1.0);
@@ -145,7 +146,7 @@ public class CoordinateView extends View {
 
         int trapMinusMidX = getWidth() / 2 - (int)(freq * getWidth() / showValue) /4;
         int trapPlusMidX = getWidth() / 2 + (int)(freq * getWidth() / showValue) /4;
-        long trapWidthLong = bandwidth * getWidth() / showValue / 4;
+        double trapWidthLong = bandwidth * getWidth() / showValue / 4;
 //        int trapWidth = (int)(bandwidth * getWidth() / showValue / 4);
         int trapWidth = 2;
         if(trapWidthLong >= getWidth()){
@@ -174,7 +175,7 @@ public class CoordinateView extends View {
         path.lineTo(trapMinusX3,trapMinusY3);                           //路径直线到第四个点
         path.lineTo(trapMinusX4,trapMinusY4);                           //路径直线到第三个点
         path.lineTo(trapMinusX1,trapMinusY1);                           //路径直线到第一个点（闭合形成四边形）
-        mPaint.setColor(Color.parseColor("#00008B"));
+        mPaint.setColor(Color.parseColor("#A600008B"));
         canvas.drawPath(path,mPaint);
 
 //        mPaint.setColor(Color.parseColor("#00008B"));
@@ -202,7 +203,7 @@ public class CoordinateView extends View {
         path2.lineTo(trapPlusX3,trapPlusY3);                           //路径直线到第四个点
         path2.lineTo(trapPlusX4,trapPlusY4);                           //路径直线到第三个点
         path2.lineTo(trapPlusX1,trapPlusY1);                           //路径直线到第一个点（闭合形成四边形）
-        mPaint.setColor(Color.parseColor("#FF0000"));
+        mPaint.setColor(Color.parseColor("#A6FF0000"));
         canvas.drawPath(path2,mPaint);
 
 //        mPaint.setColor(Color.parseColor("#FF0000"));
