@@ -4,11 +4,81 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="fragment2"
-        android:textSize="20sp"
-        />
+        android:layout_marginTop="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="50dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="自由空间损耗"
+            android:textSize="30sp"/>
+
+        <LinearLayout
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="工作频率(MHz)：" />
+
+            <EditText
+                android:id="@+id/work_freq"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="2,200.00"
+                android:imeOptions="actionDone"
+                android:inputType="numberDecimal" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="空间距离(km)：" />
+
+            <EditText
+                android:id="@+id/space_distance"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="1,000.00"
+                android:imeOptions="actionDone"
+                android:inputType="numberDecimal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="自由空间损耗(dB)：" />
+
+            <TextView
+                android:id="@+id/cal_res"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="159.288" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
 </RelativeLayout>
