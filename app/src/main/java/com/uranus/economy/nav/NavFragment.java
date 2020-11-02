@@ -13,6 +13,7 @@ import com.uranus.economy.fragment.Fragment1;
 import com.uranus.economy.fragment.Fragment2;
 import com.uranus.economy.fragment.Fragment3;
 import com.uranus.economy.fragment.Fragment4;
+import com.uranus.economy.fragment.Fragment5;
 
 import java.util.List;
 
@@ -29,6 +30,8 @@ public class NavFragment extends BaseFragment implements View.OnClickListener, V
     NavigationButton mNav3;
     @BindView(R.id.nav_4)
     NavigationButton mNav4;
+    @BindView(R.id.nav_5)
+    NavigationButton mNav5;
     private Context mContext;
     private int mContainerId;
     private boolean isInit = false;
@@ -50,6 +53,22 @@ public class NavFragment extends BaseFragment implements View.OnClickListener, V
     protected void initWidget(View root) {
         super.initWidget(root);
 
+//        mNav1.init(R.drawable.tab_icon_1,
+//                R.string.text1,
+//                Fragment1.class);
+//
+//        mNav2.init(R.drawable.tab_icon_3,
+//                R.string.text2,
+//                Fragment2.class);
+//
+//        mNav3.init(R.drawable.tab_icon_2,
+//                R.string.text3,
+//                Fragment3.class);
+//
+//        mNav4.init(R.drawable.tab_icon_4,
+//                R.string.text4,
+//                Fragment4.class);
+
         mNav1.init(R.drawable.tab_icon_1,
                 R.string.text1,
                 Fragment1.class);
@@ -65,12 +84,15 @@ public class NavFragment extends BaseFragment implements View.OnClickListener, V
         mNav4.init(R.drawable.tab_icon_4,
                 R.string.text4,
                 Fragment4.class);
+        mNav5.init(R.drawable.tab_icon_3,
+                R.string.text5,
+                Fragment5.class);
 
 
     }
 
     @OnClick({R.id.nav_1, R.id.nav_2,
-            R.id.nav_3, R.id.nav_4})
+            R.id.nav_3, R.id.nav_4,R.id.nav_5})
     @Override
     public void onClick(View v) {
         if (v instanceof NavigationButton) {
@@ -109,6 +131,7 @@ public class NavFragment extends BaseFragment implements View.OnClickListener, V
         mNav2.clearFragment();
         mNav3.clearFragment();
         mNav4.clearFragment();
+        mNav5.clearFragment();
     }
 
     @SuppressWarnings("RestrictedApi")

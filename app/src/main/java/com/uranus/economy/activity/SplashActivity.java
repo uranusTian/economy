@@ -30,9 +30,11 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void run() {
                 if (UserManager.getInstance().isLogin()){
-                    router.router(ShowFreqActivity.class);
+//                    router.router(ShowFreqActivity.class);
+                    router.router(MainActivity.class);
                 }else {
-                    router.router(ShowFreqActivity.class);
+//                    router.router(ShowFreqActivity.class);
+                    router.router(MainActivity.class);
                 }
                 SplashActivity.this.finish();
             }

@@ -17,6 +17,7 @@ public class Util {
             return string;
         }
         String end = "";
+        String begin = "";
         String strInt = string;
         String sss = string;
         if(string.contains(".")){
@@ -25,7 +26,11 @@ public class Util {
             strInt = string.substring(0,decIndex);
             sss = strInt;
         }
-
+        if(string.startsWith("-")){
+            begin = "-";
+            strInt = string.substring(1,strInt.length());
+            sss = strInt;
+        }
 
         int b = strInt.length() / 3;
         if (strInt.length() >= 3 ) {
@@ -41,7 +46,7 @@ public class Util {
             }
             sss = sss + strInt;
         }
-        return sss + end;
+        return begin + sss + end;
     }
 
     public static double getDefSampFreq(double freqLong, double bandwidthLong){
@@ -64,7 +69,31 @@ public class Util {
     public static String doubleToStr(double doubleVal){
         DecimalFormat df = new DecimalFormat("0.000");
         String a = df.format(doubleVal);
+        if(a.endsWith(".000")){
+            a = a.substring(0,a.length() - 4);
+        }
         return a;
+    }
+
+    public static double getFrontCenterFreq(double centerFreq ,double samplingFreq){
+        if(samplingFreq > 0 && centerFreq > 0){
+            int cycleNum = (int)(centerFreq/samplingFreq);
+            double res = centerFreq;
+            while(true){
+                double curRes = centerFreq - cycleNum * samplingFreq;
+                if(curRes <= 0){
+                    if(res <= curRes * (-1)){
+                        return res;
+                    } else {
+                        return curRes;
+                    }
+                } else {
+                    res = curRes;
+                    cycleNum++;
+                }
+            }
+        }
+        return centerFreq;
     }
 
     public static boolean isMix(double centerFreqLong,double bandwidthLong,double samplingFreqLong){
@@ -77,6 +106,12 @@ public class Util {
         if(samplingFreqLong <= 0){
             return false;
         }
+
+        double diff = high1 - low2;
+        int diffTimes = (int)(diff / samplingFreqLong);
+        low1 += samplingFreqLong * diffTimes;
+        low2 += samplingFreqLong * diffTimes;
+        lowMid += samplingFreqLong * diffTimes;
 
         while(low1 < high2){
             if(low1 > high1 && low1 < high2){
