@@ -1,6 +1,7 @@
 package com.uranus.economy.nav;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -57,6 +58,12 @@ public class NavigationButton extends FrameLayout {
         super.setSelected(selected);
         mIconView.setSelected(selected);
         mTitleView.setSelected(selected);
+        if(selected){
+            mTitleView.setTextColor(Color.parseColor("#0000FF"));
+        } else {
+            mTitleView.setTextColor(Color.parseColor("#708090"));
+        }
+
     }
 
     public void showRedDot(int count) {

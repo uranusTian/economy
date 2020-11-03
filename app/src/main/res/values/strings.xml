@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">采样率计算</string>
+    <string name="app_name">功率单位换算</string>
     <string name="user_login_tip">账号密码登录</string>
     <string name="account">账号</string>
     <string name="username_hint">输入员工账号/手机/邮箱</string>

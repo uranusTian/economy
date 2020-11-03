@@ -64,7 +64,7 @@ public class Fragment5 extends BaseFragment {
         if(t1 <= t2){
             return 0;
         } else {
-            double temp = d2 * 1000 / 4.12 - Math.sqrt(d1);
+            double temp = d2 / 4.12 - Math.sqrt(d1);
             return temp * temp;
         }
     }
@@ -72,8 +72,8 @@ public class Fragment5 extends BaseFragment {
     private void refreshRes(){
         String workFreqStr = param1.getText().toString();
         String spaceDistanceStr = param2.getText().toString();
-        double workFreqDouble = 500;
-        double spaceDistanceDouble = 500;
+        double workFreqDouble = 100;
+        double spaceDistanceDouble = 100;
         if(!TextUtils.isEmpty(workFreqStr)){
             try {
                 workFreqDouble = Double.parseDouble(workFreqStr.replace(",", ""));

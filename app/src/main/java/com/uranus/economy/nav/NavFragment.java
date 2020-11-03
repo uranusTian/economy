@@ -84,7 +84,7 @@ public class NavFragment extends BaseFragment implements View.OnClickListener, V
         mNav4.init(R.drawable.tab_icon_4,
                 R.string.text4,
                 Fragment4.class);
-        mNav5.init(R.drawable.tab_icon_3,
+        mNav5.init(R.drawable.tab_icon_5,
                 R.string.text5,
                 Fragment5.class);
 

@@ -28,8 +28,8 @@ public class WaterMarkView extends AppCompatTextView {
 
     private void init() {
         List<String> labels = new ArrayList<>();
-        labels.add("王东");
-        labels.add("4C1K-WXY");
+        labels.add("鸣谢:天王星");
+//        labels.add("4C1K-WXY");
         setBackground(new WaterMarkBg(getContext(), labels, -30, 13, 40));
     }
 }
