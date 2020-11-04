@@ -59,9 +59,13 @@ public class Fragment5 extends BaseFragment {
     }
 
     private double calculateRes(double d1,double d2){
-        double t1 = d2 / 6378.137;
-        double t2 =  getArcCos(6378137 / (6378137 + d1));
-        if(t1 <= t2){
+//        double t1 = d2 / 6378.137;
+//        double t2 =  getArcCos(6378137 / (6378137 + d1));
+
+        double t1 = d2 / 4.12;
+        double t2 =  Math.sqrt(d1);
+
+        if(t1 < t2){
             return 0;
         } else {
             double temp = d2 / 4.12 - Math.sqrt(d1);
