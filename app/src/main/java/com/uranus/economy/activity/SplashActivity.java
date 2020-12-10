@@ -31,10 +31,13 @@ public class SplashActivity extends BaseActivity {
             public void run() {
                 if (UserManager.getInstance().isLogin()){
 //                    router.router(ShowFreqActivity.class);
-                    router.router(MainActivity.class);
+//                    router.router(MainActivity.class);
+                    router.router(SearchTrueActivity.class);
+
                 }else {
 //                    router.router(ShowFreqActivity.class);
-                    router.router(MainActivity.class);
+//                    router.router(MainActivity.class);
+                    router.router(SearchTrueActivity.class);
                 }
                 SplashActivity.this.finish();
             }
