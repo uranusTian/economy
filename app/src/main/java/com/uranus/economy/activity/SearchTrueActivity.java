@@ -1,5 +1,6 @@
 package com.uranus.economy.activity;
 
+import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -8,12 +9,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.squareup.picasso.Picasso;
 import com.uranus.economy.R;
 import com.uranus.economy.base.BaseActivity;
+import com.uranus.economy.listener.PicReverseListener;
 import com.uranus.economy.util.ScreenUtil;
+import com.uranus.economy.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -32,12 +36,15 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
 
     private Context mContext;
     private CircleImageView[] mImages;
-    private int moveNum = 10;
-    private int imageNum = 3;
+    private int moveNum = 5;
+    private int imageNum = 4;
     private static int IMAGE_SIZE = 80;
     private int durationX = 200;
     private int durationY = 600;
     private int moveXDistance = 100;
+    private boolean canClick = true;
+    private float[] lastLocationY = new float[imageNum];
+    private int[] lastLocation = new int[imageNum];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,21 +73,125 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected void initData() {
+
+        moveXDistance = ScreenUtil.getScreenWidth() / 5;
+        IMAGE_SIZE = ScreenUtil.getScreenWidth() / 6;
+        lastLocationY = new float[imageNum];
+        lastLocation = new int[imageNum];
+        for(int i = 0;i< imageNum;i++){
+            lastLocation[i] = i;
+            lastLocationY[i] = 0.0f;
+        }
+
         mImages = new CircleImageView[imageNum];
-        int margintop = (ScreenUtil.getScreenHeight() - ScreenUtil.dp2px(IMAGE_SIZE) * imageNum) / (imageNum + 1) + ScreenUtil.dp2px(IMAGE_SIZE);
+        int margintop = (ScreenUtil.getScreenHeight() - IMAGE_SIZE * imageNum) / (imageNum + 1) + IMAGE_SIZE;
         for(int i = 0;i<imageNum;i++){
             CircleImageView curImage = new CircleImageView(this);
-            final RelativeLayout.LayoutParams layoutParams =  new RelativeLayout.LayoutParams(ScreenUtil.dp2px(IMAGE_SIZE),
-                    ScreenUtil.dp2px(IMAGE_SIZE));
-            layoutParams.topMargin = (i + 1) * margintop - ScreenUtil.dp2px(IMAGE_SIZE);
+            final RelativeLayout.LayoutParams layoutParams =  new RelativeLayout.LayoutParams(IMAGE_SIZE,
+                    IMAGE_SIZE);
+            layoutParams.topMargin = (i + 1) * margintop - IMAGE_SIZE;
             layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
             curImage.setLayoutParams(layoutParams);
-            Picasso.with(mContext)
-                .load("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1607539463582&di=51d1efe017b2548b07a86fca386156f9&imgtype=0&src=http%3A%2F%2Fbpic.588ku.com%2F%2Felement_pic%2F20%2F06%2F30%2F82773c149795c8d4818ee1fced309ca4.jpg")
-                .into(curImage);
+            if(i == 0){
+                Picasso.with(mContext)
+                        .load(R.mipmap.ic_right)
+                        .into(curImage);
+            } else {
+                Picasso.with(mContext)
+                        .load(R.mipmap.ic_wrong)
+                        .into(curImage);
+            }
+
             topLayout.addView(curImage);
             mImages[i] = curImage;
+            final int curImageIndex = i;
+            curImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    clickImage(curImageIndex);
+                }
+            });
         }
+    }
+
+    private void clickImage(int imageIndex){
+        if(imageIndex == 0){
+            ToastUtils.showShort("恭喜你，选择正确");
+            picReverse(mImages[0],R.mipmap.ic_right,null);
+        } else {
+            ToastUtils.showShort("选择错误");
+            picReverse(mImages[imageIndex],R.mipmap.ic_wrong,null);
+        }
+    }
+
+    private void picsReverse(ImageView[] imageViews, int picId, PicReverseListener listener){
+        int[] reverseRes = new int[imageViews.length];
+        for (int i = 0;i < imageViews.length;i++){
+            final int curIndex = i;
+            picReverse(imageViews[i], picId, new PicReverseListener() {
+                @Override
+                public void onSuccess() {
+                    if(listener != null){
+                        reverseRes[curIndex] = 1;
+                        for(int j = 0; j < imageViews.length;j++){
+                            if(reverseRes[j] != 1){
+                                return;
+                            }
+                        }
+                        listener.onSuccess();
+                    }
+                }
+            });
+        }
+    }
+
+    private void picReverse(ImageView imageView, int picId, PicReverseListener listener){
+        final int duration = 300;
+        final int degree = 90;
+        final int degree2 = -degree;
+        final ObjectAnimator a, b;
+        a = ObjectAnimator.ofFloat(imageView, "rotationY", 0, degree);
+        b = ObjectAnimator.ofFloat(imageView, "rotationY", degree2, 0);
+        a.setDuration(duration);
+        b.setDuration(duration);
+        a.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+            }
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                Picasso.with(mContext)
+                        .load(picId)
+                        .into(imageView);
+            }
+            @Override
+            public void onAnimationCancel(Animator animation) {
+            }
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+            }
+        });
+        b.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+            }
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                canClick = true;
+                if(listener != null){
+                    listener.onSuccess();
+                }
+            }
+            @Override
+            public void onAnimationCancel(Animator animation) {
+            }
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+            }
+        });
+        AnimatorSet set = new AnimatorSet();
+        set.play(a).before(b);
+        set.start();
     }
 
     private void startXmlProperty() {
@@ -97,25 +208,20 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
     }
 
     private void startJavaProperty() {
+        canClick = false;
         AnimatorSet[] animatorSets = new AnimatorSet[imageNum];
-        int moveY = (ScreenUtil.getScreenHeight() - ScreenUtil.dp2px(IMAGE_SIZE) * imageNum) / (imageNum + 1) + ScreenUtil.dp2px(IMAGE_SIZE);
+        int moveY = (ScreenUtil.getScreenHeight() - IMAGE_SIZE * imageNum) / (imageNum + 1) + IMAGE_SIZE;
         durationY = durationX * moveY / moveXDistance;
         for(int i = 0;i<imageNum;i++){
             AnimatorSet animatorSet = new AnimatorSet();
             animatorSets[i] = animatorSet;
         }
         int[][] movePath = new int[imageNum][moveNum];
-        int[] lastLocation = new int[imageNum];
-//        float[] lastLocationX = new float[imageNum];
-        float[] lastLocationY = new float[imageNum];
         int[] tempLocation = new int[imageNum];
         ObjectAnimator[] lastAnimator = new ObjectAnimator[imageNum];
         for(int i = 0;i< imageNum;i++){
-            movePath[i][0] = i;
-            lastLocation[i] = i;
+            movePath[i][0] = lastLocation[i];
             tempLocation[i] = i;
-//            lastLocationX[i] = 0.0f;
-            lastLocationY[i] = 0.0f;
         }
 
         //随机生成运动轨迹
@@ -133,6 +239,10 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
                     break;
                 }
             }
+        }
+
+        for(int i = 0;i< imageNum;i++){
+            lastLocation[i] = movePath[i][moveNum - 1];
         }
 
         for(int m=1;m < moveNum;m++){
@@ -165,9 +275,14 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
             }
         }
 
-        for(int i = 0;i<imageNum;i++){
-            animatorSets[i].start();
-        }
+        picsReverse(mImages, R.mipmap.ic_bg, new PicReverseListener() {
+            @Override
+            public void onSuccess() {
+                for(int i = 0;i<imageNum;i++){
+                    animatorSets[i].start();
+                }
+            }
+        });
 
 
 //        int sHeigh = ScreenUtil.getScreenHeight();
