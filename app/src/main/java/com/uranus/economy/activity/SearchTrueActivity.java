@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.uranus.economy.R;
@@ -28,14 +29,21 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
     @BindView(R.id.top_layout)
     protected RelativeLayout topLayout;
 
-    @BindView(R.id.button_property_xml)
-    protected Button mButtonXml;
+    @BindView(R.id.low_diff)
+    protected Button lowDiff;
+
+    @BindView(R.id.add_diff)
+    protected Button addDiff;
+
+    @BindView(R.id.cur_diff)
+    protected TextView curDiff;
 
     @BindView(R.id.button_property_java)
     protected Button mButtonJava;
 
     private Context mContext;
     private CircleImageView[] mImages;
+    private int curDiffNum = 1;
     private int moveNum = 5;
     private int imageNum = 4;
     private static int IMAGE_SIZE = 80;
@@ -58,12 +66,27 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
         return R.layout.activity_search_true;
     }
 
-    @OnClick({R.id.button_property_xml,R.id.button_property_java})
+    @OnClick({R.id.low_diff,R.id.add_diff,R.id.button_property_java})
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.button_property_xml:
-                startXmlProperty();
+            case R.id.add_diff:
+                if(curDiffNum >= 16){
+                    ToastUtils.showShort("已达到最大难度16，不能再增加难度了");
+                } else {
+                    curDiffNum++;
+                    curDiff.setText(curDiffNum + "");
+                    refreshData();
+                }
+                break;
+            case R.id.low_diff:
+                if(curDiffNum <= 1){
+                    ToastUtils.showShort("已达到最小难度1，不能再减少难度了");
+                } else {
+                    curDiffNum--;
+                    curDiff.setText(curDiffNum + "");
+                    refreshData();
+                }
                 break;
             case R.id.button_property_java:
                 startJavaProperty();
@@ -73,6 +96,94 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected void initData() {
+        refreshData();
+    }
+
+    private void refreshData(){
+
+        switch (curDiffNum){
+            case 1:
+                moveNum = 2;
+                imageNum = 2;
+                durationX = 400;
+                break;
+            case 2:
+                moveNum = 3;
+                imageNum = 2;
+                durationX = 400;
+                break;
+            case 3:
+                moveNum = 3;
+                imageNum = 3;
+                durationX = 300;
+                break;
+            case 4:
+                moveNum = 4;
+                imageNum = 3;
+                durationX = 300;
+                break;
+            case 5:
+                moveNum = 5;
+                imageNum = 3;
+                durationX = 300;
+                break;
+            case 6:
+                moveNum = 6;
+                imageNum = 3;
+                durationX = 300;
+                break;
+            case 7:
+                moveNum = 6;
+                imageNum = 3;
+                durationX = 200;
+                break;
+            case 8:
+                moveNum = 5;
+                imageNum = 4;
+                durationX = 200;
+                break;
+            case 9:
+                moveNum = 6;
+                imageNum = 4;
+                durationX = 200;
+                break;
+            case 10:
+                moveNum = 7;
+                imageNum = 4;
+                durationX = 200;
+                break;
+            case 11:
+                moveNum = 8;
+                imageNum = 4;
+                durationX = 200;
+                break;
+            case 12:
+                moveNum = 10;
+                imageNum = 4;
+                durationX = 200;
+                break;
+            case 13:
+                moveNum = 10;
+                imageNum = 4;
+                durationX = 150;
+                break;
+            case 14:
+                moveNum = 8;
+                imageNum = 5;
+                durationX = 200;
+                break;
+            case 15:
+                moveNum = 10;
+                imageNum = 5;
+                durationX = 180;
+                break;
+            case 16:
+                moveNum = 10;
+                imageNum = 5;
+                durationX = 150;
+                break;
+        }
+
 
         moveXDistance = ScreenUtil.getScreenWidth() / 5;
         IMAGE_SIZE = ScreenUtil.getScreenWidth() / 6;
@@ -83,8 +194,10 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
             lastLocationY[i] = 0.0f;
         }
 
+        topLayout.removeAllViews();
+
         mImages = new CircleImageView[imageNum];
-        int margintop = (ScreenUtil.getScreenHeight() - IMAGE_SIZE * imageNum) / (imageNum + 1) + IMAGE_SIZE;
+        int margintop = (ScreenUtil.getScreenHeight() - ScreenUtil.dp2px(20) - IMAGE_SIZE * imageNum) / (imageNum + 1) + IMAGE_SIZE;
         for(int i = 0;i<imageNum;i++){
             CircleImageView curImage = new CircleImageView(this);
             final RelativeLayout.LayoutParams layoutParams =  new RelativeLayout.LayoutParams(IMAGE_SIZE,
