@@ -8,6 +8,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -16,9 +20,13 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.uranus.economy.R;
 import com.uranus.economy.base.BaseActivity;
+import com.uranus.economy.interpolator.CurveInterpolator;
 import com.uranus.economy.listener.PicReverseListener;
 import com.uranus.economy.util.ScreenUtil;
 import com.uranus.economy.util.ToastUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -47,7 +55,7 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
     private int moveNum = 5;
     private int imageNum = 4;
     private static int IMAGE_SIZE = 80;
-    private int durationX = 200;
+    private int durationX = 2000;
     private int durationY = 600;
     private int moveXDistance = 100;
     private boolean canClick = true;
@@ -90,6 +98,7 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.button_property_java:
                 startJavaProperty();
+//                test();
                 break;
         }
     }
@@ -100,87 +109,87 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
     }
 
     private void refreshData(){
-
+        int common = 30;
         switch (curDiffNum){
             case 1:
-                moveNum = 2;
+                moveNum = 4;
                 imageNum = 2;
-                durationX = 400;
+                durationX = 40 * common;
                 break;
             case 2:
-                moveNum = 3;
+                moveNum = 6;
                 imageNum = 2;
-                durationX = 400;
+                durationX = 30 * common;
                 break;
             case 3:
                 moveNum = 3;
                 imageNum = 3;
-                durationX = 300;
+                durationX = 30 * common;
                 break;
             case 4:
-                moveNum = 4;
+                moveNum = 6;
                 imageNum = 3;
-                durationX = 300;
+                durationX = 30 * common;
                 break;
             case 5:
-                moveNum = 5;
+                moveNum = 8;
                 imageNum = 3;
-                durationX = 300;
+                durationX = 30 * common;
                 break;
             case 6:
-                moveNum = 6;
+                moveNum = 10;
                 imageNum = 3;
-                durationX = 300;
+                durationX = 30 * common;
                 break;
             case 7:
-                moveNum = 6;
+                moveNum = 13;
                 imageNum = 3;
-                durationX = 200;
+                durationX = 20 * common;
                 break;
             case 8:
-                moveNum = 5;
-                imageNum = 4;
-                durationX = 200;
-                break;
-            case 9:
-                moveNum = 6;
-                imageNum = 4;
-                durationX = 200;
-                break;
-            case 10:
                 moveNum = 7;
                 imageNum = 4;
-                durationX = 200;
+                durationX = 20 * common;
+                break;
+            case 9:
+                moveNum = 10;
+                imageNum = 4;
+                durationX = 20 * common;
+                break;
+            case 10:
+                moveNum = 13;
+                imageNum = 4;
+                durationX = 20 * common;
                 break;
             case 11:
-                moveNum = 8;
+                moveNum = 15;
                 imageNum = 4;
-                durationX = 200;
+                durationX = 20 * common;
                 break;
             case 12:
-                moveNum = 10;
+                moveNum = 18;
                 imageNum = 4;
-                durationX = 200;
+                durationX = 20 * common;
                 break;
             case 13:
-                moveNum = 10;
+                moveNum = 20;
                 imageNum = 4;
-                durationX = 150;
+                durationX = 15 * common;
                 break;
             case 14:
                 moveNum = 8;
                 imageNum = 5;
-                durationX = 200;
+                durationX = 20 * common;
                 break;
             case 15:
-                moveNum = 10;
+                moveNum = 14;
                 imageNum = 5;
-                durationX = 180;
+                durationX = 18 * common;
                 break;
             case 16:
-                moveNum = 10;
+                moveNum = 20;
                 imageNum = 5;
-                durationX = 150;
+                durationX = 15 * common;
                 break;
         }
 
@@ -205,7 +214,7 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
             layoutParams.topMargin = (i + 1) * margintop - IMAGE_SIZE;
             layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
             curImage.setLayoutParams(layoutParams);
-            if(i == 0){
+            if(i == (imageNum - 1) / 2){
                 Picasso.with(mContext)
                         .load(R.mipmap.ic_right)
                         .into(curImage);
@@ -228,9 +237,9 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
     }
 
     private void clickImage(int imageIndex){
-        if(imageIndex == 0){
+        if(imageIndex == (imageNum - 1) / 2){
             ToastUtils.showShort("恭喜你，选择正确");
-            picReverse(mImages[0],R.mipmap.ic_right,null);
+            picReverse(mImages[imageIndex],R.mipmap.ic_right,null);
         } else {
             ToastUtils.showShort("选择错误");
             picReverse(mImages[imageIndex],R.mipmap.ic_wrong,null);
@@ -313,6 +322,50 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
 //        animationSet.start();
     }
 
+    private void test() {
+
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(mImages[0], "translationX", 0f,250,0f);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(mImages[0], "translationY", 0f,400);
+        AnimatorSet animatorSet1 = new AnimatorSet();
+        scaleX.setDuration(10000);
+        scaleX.setInterpolator(new CurveInterpolator());
+
+//        AnimatorSet animatorSet2 = new AnimatorSet();
+        scaleY.setDuration(10000);
+        animatorSet1.playTogether(scaleX,scaleY);
+//        animatorSet2.play(scaleY);
+        animatorSet1.start();
+//        animatorSet2.start();
+
+
+//        ObjectAnimator scaleX2 = ObjectAnimator.ofFloat(mImages[0], "translationX", 0f,250);
+//        ObjectAnimator scaleY2 = ObjectAnimator.ofFloat(mImages[0], "translationY", 0f,200);
+//        AnimatorSet animatorSet3 = new AnimatorSet();
+//        animatorSet3.setDuration(1500);
+//        animatorSet3.setInterpolator(new DecelerateInterpolator());
+//
+//        AnimatorSet animatorSet4 = new AnimatorSet();
+//        animatorSet4.setDuration(1500);
+//        animatorSet3.play(scaleX2);
+//        animatorSet4.play(scaleY2);
+
+
+//        enter.setTarget(target);
+
+
+//        ObjectAnimator objectAnimatorX = ObjectAnimator.ofFloat(mImages[0], "translationX", 0f,250,0f);
+//        ObjectAnimator objectAnimatorY = ObjectAnimator.ofFloat(mImages[0], "translationY", 0f,50,200,350,400);
+//        AnimatorSet animatorSet = new AnimatorSet();
+////      同时播放
+//        animatorSet.playTogether(objectAnimatorX, objectAnimatorY);
+////      动画用时100ms
+//        animatorSet.setDuration(1500);
+//        ObjectAnimator objectAnimatorY2 = ObjectAnimator.ofFloat(mImages[0], "translationY", 400f, 0);
+//        animatorSet.playSequentially(objectAnimatorY,objectAnimatorY2);
+////      开始动画
+//        animatorSet.start();
+    }
+
     private int subAbs(int a, int b){
         if(a>b){
             return a - b;
@@ -323,15 +376,17 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
     private void startJavaProperty() {
         canClick = false;
         AnimatorSet[] animatorSets = new AnimatorSet[imageNum];
+//        AnimatorSet[] animatorSets2 = new AnimatorSet[imageNum];
         int moveY = (ScreenUtil.getScreenHeight() - IMAGE_SIZE * imageNum) / (imageNum + 1) + IMAGE_SIZE;
         durationY = durationX * moveY / moveXDistance;
         for(int i = 0;i<imageNum;i++){
-            AnimatorSet animatorSet = new AnimatorSet();
-            animatorSets[i] = animatorSet;
+            animatorSets[i] = new AnimatorSet();
+//            animatorSets2[i] = new AnimatorSet();
         }
         int[][] movePath = new int[imageNum][moveNum];
         int[] tempLocation = new int[imageNum];
         ObjectAnimator[] lastAnimator = new ObjectAnimator[imageNum];
+//        ObjectAnimator[] lastAnimator2 = new ObjectAnimator[imageNum];
         for(int i = 0;i< imageNum;i++){
             movePath[i][0] = lastLocation[i];
             tempLocation[i] = i;
@@ -363,28 +418,64 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
                 //0 向右，1 向左
                 int direction = (int)(Math.random()*(2));
                 float beginX = 0.0f;
-                float endX = moveXDistance;
+                int randomNum = (int)(Math.random()*(9));
+                float largeNum = (float)(randomNum + 10)/10f;
+                float endX = moveXDistance * largeNum;
                 if(direction == 1){
-                    endX = -moveXDistance;
-                }
-                ObjectAnimator objectAnimator1 = ObjectAnimator.ofFloat(mImages[n], "translationX", beginX, endX);//沿着x轴平移
-                objectAnimator1.setDuration(durationX);
-                if(m > 1){
-                    animatorSets[n].playSequentially(lastAnimator[n],objectAnimator1);
+                    endX = -endX;
                 }
 
-//                int curY = subAbs(movePath[n][m] , movePath[n][m - 1]) * durationY;
+
                 float endY = (movePath[n][m] - movePath[n][m - 1]) * moveY + lastLocationY[n];
-                ObjectAnimator objectAnimator2 = ObjectAnimator.ofFloat(mImages[n], "translationY", lastLocationY[n], endY);//沿着Y轴平移
-                objectAnimator2.setDuration(durationY);
-                animatorSets[n].playSequentially(objectAnimator1,objectAnimator2);
+                ObjectAnimator scaleX = ObjectAnimator.ofFloat(mImages[n], "translationX", beginX,endX,beginX);
+                ObjectAnimator scaleY = ObjectAnimator.ofFloat(mImages[n], "translationY", lastLocationY[n], endY);
+//                AnimatorSet animatorSet1 = new AnimatorSet();
+                scaleX.setDuration(durationX);
+                scaleX.setInterpolator(new CurveInterpolator());
+
+//                AnimatorSet animatorSet2 = new AnimatorSet();
+                scaleY.setDuration(durationX);
+
+                animatorSets[n].playTogether(scaleX,scaleY);
+                if(m > 1){
+                    animatorSets[n].playSequentially(lastAnimator[n],scaleX);
+                }
                 lastLocationY[n] = endY;
+                lastAnimator[n] = scaleX;
+//                lastAnimator2[n] = scaleY;
 
-                ObjectAnimator objectAnimator3 = ObjectAnimator.ofFloat(mImages[n], "translationX", endX, beginX);//沿着x轴平移
-                objectAnimator3.setDuration(durationX);
-                animatorSets[n].playSequentially(objectAnimator2,objectAnimator3);
+//                if(m > 1){
+//                    animatorSets[n].playSequentially(lastAnimator[n],scaleX);
+//                    animatorSets2[n].playSequentially(lastAnimator2[n],scaleY);
+//                } else {
+//                    animatorSets[n].play(scaleX);
+//                    animatorSets2[n].play(scaleY);
+//                }
+//                lastLocationY[n] = endY;
+//                lastAnimator[n] = scaleX;
+//                lastAnimator2[n] = scaleY;
 
-                lastAnimator[n] = objectAnimator3;
+
+
+
+//                ObjectAnimator objectAnimator1 = ObjectAnimator.ofFloat(mImages[n], "translationX", beginX, endX);//沿着x轴平移
+//                objectAnimator1.setDuration(durationX);
+//                if(m > 1){
+//                    animatorSets[n].playSequentially(lastAnimator[n],objectAnimator1);
+//                }
+//
+////                int curY = subAbs(movePath[n][m] , movePath[n][m - 1]) * durationY;
+//                float endY = (movePath[n][m] - movePath[n][m - 1]) * moveY + lastLocationY[n];
+//                ObjectAnimator objectAnimator2 = ObjectAnimator.ofFloat(mImages[n], "translationY", lastLocationY[n], endY);//沿着Y轴平移
+//                objectAnimator2.setDuration(durationY);
+//                animatorSets[n].playSequentially(objectAnimator1,objectAnimator2);
+//                lastLocationY[n] = endY;
+//
+//                ObjectAnimator objectAnimator3 = ObjectAnimator.ofFloat(mImages[n], "translationX", endX, beginX);//沿着x轴平移
+//                objectAnimator3.setDuration(durationX);
+//                animatorSets[n].playSequentially(objectAnimator2,objectAnimator3);
+//
+//                lastAnimator[n] = objectAnimator3;
             }
         }
 
@@ -393,6 +484,7 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
             public void onSuccess() {
                 for(int i = 0;i<imageNum;i++){
                     animatorSets[i].start();
+//                    animatorSets2[i].start();
                 }
             }
         });
