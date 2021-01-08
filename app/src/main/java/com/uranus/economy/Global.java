@@ -15,4 +15,7 @@ public class Global {
     public static final String REQUEST_TASK_SUBMIT = REQUEST_HOST_PRE + "/app/task/submit";
     public static final String REQUEST_FETCH_RANKLIST = REQUEST_HOST_PRE + "/app/task/chart";
     public static final String REQUEST_AGREEMENT_URL = REQUEST_HOST_PRE + "/app/agreement/index";
+
+    public static final String SHIM_HOST = "http://39.98.181.182:7095/";
+    public static final String GET_USER_INFO = SHIM_HOST + "airplane/user/getUserInfo";
 }

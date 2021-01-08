@@ -2,6 +2,7 @@ package com.uranus.economy.network;
 
 import com.google.gson.JsonObject;
 import com.uranus.economy.bean.User;
+import com.uranus.economy.bean.UserInfo;
 import com.uranus.economy.manager.HttpManager;
 import com.uranus.economy.network.callback.RequestCallback;
 
@@ -33,6 +34,21 @@ public class AppRequest {
                 .loginByEmail(getRequestBody(params))
                 .map(new HttpManager.HttpRequestFunc<User>())
                 .compose(RxHelper.<User>applySchedulers())
+                .subscribe(subscriber);
+    }
+
+    //获取用户信息
+    public static void getUserInfo(String url,int id, String device_num, RequestCallback<UserInfo> subscriber) {
+        Map<String, Object> params = new HashMap<>();
+        if(id > 0){
+            params.put("id", id);
+        }
+        params.put("device_num", device_num);
+        HttpManager.getInstance()
+                .getService()
+                .getUserInfo(getRequestBody(params))
+                .map(new HttpManager.HttpRequestFunc<UserInfo>())
+                .compose(RxHelper.<UserInfo>applySchedulers())
                 .subscribe(subscriber);
     }
 

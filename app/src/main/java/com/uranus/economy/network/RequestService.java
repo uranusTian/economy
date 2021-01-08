@@ -2,6 +2,7 @@ package com.uranus.economy.network;
 
 import com.uranus.economy.bean.BaseBean;
 import com.uranus.economy.bean.User;
+import com.uranus.economy.bean.UserInfo;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 
+import static com.uranus.economy.Global.GET_USER_INFO;
 import static com.uranus.economy.Global.REQUEST_FETCH_TASKLIST;
 import static com.uranus.economy.Global.REQUEST_LOGIN;
 
@@ -60,6 +62,10 @@ public interface RequestService {
      */
     @POST(REQUEST_LOGIN)
     Observable<BaseBean<User>> loginByEmail(@Body RequestBody params);
+
+    //获取用户信息
+    @POST(GET_USER_INFO)
+    Observable<BaseBean<UserInfo>> getUserInfo(@Body RequestBody params);
 
 
     /**

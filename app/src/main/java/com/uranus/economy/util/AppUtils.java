@@ -18,6 +18,7 @@ import androidx.multidex.BuildConfig;
 
 import com.uranus.economy.base.App;
 import com.uranus.economy.bean.User;
+import com.uranus.economy.bean.UserInfo;
 
 import java.util.List;
 import java.util.Locale;
@@ -243,6 +244,27 @@ public class AppUtils {
         user.id = prefs.getInt("id", -1);
         user.no = prefs.getString("no", "");
         user.last_login_time = prefs.getString("last_login_time", "");
+        return user;
+    }
+
+    public static void saveUserInfo(Context context, UserInfo userInfo) {
+        SharedPreferences prefs = context.getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
+        //通过edit()方法创建一个SharePreferences.Editor类的实例对象
+        SharedPreferences.Editor editor =prefs.edit();
+        editor.putString("device_num", userInfo.device_num);
+        editor.putInt("id", userInfo.id);
+        editor.putInt("cur_level", userInfo.cur_level);
+        editor.putInt("score", userInfo.score);
+        editor.apply();
+    }
+
+    public static UserInfo getUserInfo(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
+        UserInfo user = new UserInfo();
+        user.device_num = prefs.getString("device_num", "");
+        user.id = prefs.getInt("id", -1);
+        user.cur_level = prefs.getInt("cur_level", 1);
+        user.score = prefs.getInt("score", 0);
         return user;
     }
 
