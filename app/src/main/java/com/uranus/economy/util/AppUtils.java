@@ -20,6 +20,8 @@ import com.uranus.economy.base.App;
 import com.uranus.economy.bean.User;
 import com.uranus.economy.bean.UserInfo;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Locale;
 
@@ -68,6 +70,28 @@ public class AppUtils {
         Intent intent = new Intent(intentName);
         List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
         return list.size() > 0;
+    }
+
+    public static String getDeviceSerial() {
+        String serial = "unknown";
+        try {
+            Class clazz = Class.forName("android.os.Build");
+            Class paraTypes = Class.forName("java.lang.String");
+            Method method = clazz.getDeclaredMethod("getString", paraTypes);
+            if (!method.isAccessible()) {
+                method.setAccessible(true);
+            }
+            serial = (String)method.invoke(new Build(), "ro.serialno");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return serial;
     }
 
     public static int getColor(int resource) {
