@@ -199,9 +199,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void initUserInfo() {
-        String serialNumber = AppUtils.getDeviceSerial();
+        String serialNumber = AppUtils.getMacAddress();
         UserInfo curUser = AppUtils.getUserInfo(getApplicationContext());
-        ToastUtils.showShort("serialNumber : " + serialNumber);
+//        ToastUtils.showShort("serialNumber : " + serialNumber);
         if(curUser.id > 0){
             canClick = true;
             normalLevel.setText("关卡：" + curUser.cur_level);

@@ -10,6 +10,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.text.TextUtils;
 
@@ -92,6 +94,25 @@ public class AppUtils {
             e.printStackTrace();
         }
         return serial;
+    }
+
+    public static String getMacAddress() {
+
+        String macAddress = null ;
+        WifiManager wifiManager =
+                (WifiManager)App.context.getSystemService(Context.WIFI_SERVICE);
+        WifiInfo info = ( null == wifiManager ? null : wifiManager.getConnectionInfo());
+
+        if (!wifiManager.isWifiEnabled())
+        {
+            //必须先打开，才能获取到MAC地址
+            wifiManager.setWifiEnabled( true );
+            wifiManager.setWifiEnabled( false );
+        }
+        if ( null != info) {
+            macAddress = info.getMacAddress();
+        }
+        return macAddress;
     }
 
     public static int getColor(int resource) {
