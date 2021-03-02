@@ -2,6 +2,7 @@ package com.uranus.economy.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -9,8 +10,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -24,18 +27,16 @@ import com.alipay.sdk.app.AuthTask;
 import com.uranus.economy.R;
 import com.uranus.economy.base.BaseActivity;
 import com.uranus.economy.bean.AuthResult;
-import com.uranus.economy.bean.User;
 import com.uranus.economy.bean.UserInfo;
-import com.uranus.economy.manager.UserManager;
 import com.uranus.economy.network.ApiException;
 import com.uranus.economy.network.AppRequest;
 import com.uranus.economy.network.callback.RequestCallback;
 import com.uranus.economy.util.AppUtils;
-import com.uranus.economy.util.KeyboardUtils;
-import com.uranus.economy.util.Md5Utils;
 import com.uranus.economy.util.OrderInfoUtil2_0;
+import com.uranus.economy.util.SystemUtil;
 import com.uranus.economy.util.ToastUtils;
 
+import java.io.File;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -49,15 +50,20 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.normal_level)
     protected TextView normalLevel;
 
+    @BindView(R.id.ordinary_level)
+    protected TextView ordinaryLevel;
+
     @BindView(R.id.total_score)
     protected TextView totalScore;
 
     @BindView(R.id.normal_level_layout)
     protected LinearLayout normalLevelLayout;
 
+    private MediaPlayer mediaPlayer = new MediaPlayer();
+
     private boolean canClick = false;
 
-    @OnClick({R.id.normal_level_layout,R.id.zhifubao_login})
+    @OnClick({R.id.normal_level_layout,R.id.ordinary_level_layout,R.id.zhifubao_login})
     @Override
     public void onClick(View v) {
         if(!canClick){
@@ -67,8 +73,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
             case R.id.normal_level_layout:
                 router.router(SearchTrueActivity.class);
                 break;
+            case R.id.ordinary_level_layout:
+                router.router(OrdinaryLevelActivity.class);
+                break;
             case R.id.zhifubao_login:
-                authV2();
+                mediaPlayer.start();
+//                authV2();
 //                router.router(SearchTrueActivity.class);
                 break;
         }
@@ -195,21 +205,51 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void initData() {
+        if (ContextCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        } else {
+            initMediaPlayer();//初始化播放器 MediaPlayer
+        }
+        initUserInfo();
+    }
+
+    private void initMediaPlayer() {
+        try {
+            ToastUtils.showShort("init sound" );
+//            File file = new File(Environment.getExternalStorageDirectory(), "music.mp3");
+//            mediaPlayer.setDataSource(file.getPath());//指定音频文件路径
+//            mediaPlayer.setAudioSessionId(R.raw.sound_move);
+//            mediaPlayer.setLooping(true);//设置为循环播放
+//            mediaPlayer.prepare();//初始化播放器MediaPlayer
+            mediaPlayer = MediaPlayer.create(this, R.raw.sound_move);
+            mediaPlayer.setLooping(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initUserInfo();
     }
 
     private void initUserInfo() {
         String serialNumber = AppUtils.getMacAddress();
         UserInfo curUser = AppUtils.getUserInfo(getApplicationContext());
+
+        String phoneStr = SystemUtil.getSystemStr(getApplicationContext());
+//        ToastUtils.showShort("phoneStr : " + phoneStr);
+        Log.d("tian","phoneStr : " + phoneStr);
 //        ToastUtils.showShort("serialNumber : " + serialNumber);
         if(curUser.id > 0){
             canClick = true;
-            normalLevel.setText("关卡：" + curUser.cur_level);
+            normalLevel.setText("关卡：" + curUser.ease_level);
+            ordinaryLevel.setText("关卡：" + curUser.ordinary_level);
             totalScore.setText("当前积分：" + curUser.score);
             return;
         }
-
-        Log.d("tian","serialNumber : " + serialNumber);
+//        Log.d("tian","serialNumber : " + serialNumber);
 //        加密md5的方法
 //        Md5Utils.md5(pwd)
         AppRequest.getUserInfo(GET_USER_INFO, curUser.id, serialNumber,
@@ -217,7 +257,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                     @Override
                     public void onSuccess(UserInfo userInfo) {
                         canClick = true;
-                        normalLevel.setText("关卡：" + userInfo.cur_level);
+                        normalLevel.setText("关卡：" + userInfo.ease_level);
+                        ordinaryLevel.setText("关卡：" + curUser.ordinary_level);
                         totalScore.setText("当前积分：" + userInfo.score);
                         AppUtils.saveUserInfo(getApplicationContext(),userInfo);
                     }

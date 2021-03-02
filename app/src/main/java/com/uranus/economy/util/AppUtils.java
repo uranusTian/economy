@@ -298,7 +298,9 @@ public class AppUtils {
         SharedPreferences.Editor editor =prefs.edit();
         editor.putString("device_num", userInfo.device_num);
         editor.putInt("id", userInfo.id);
-        editor.putInt("cur_level", userInfo.cur_level);
+        editor.putInt("ease_level", userInfo.ease_level);
+        editor.putInt("ordinary_level", userInfo.ordinary_level);
+        editor.putInt("hard_level", userInfo.hard_level);
         editor.putInt("score", userInfo.score);
         editor.apply();
     }
@@ -308,7 +310,9 @@ public class AppUtils {
         UserInfo user = new UserInfo();
         user.device_num = prefs.getString("device_num", "");
         user.id = prefs.getInt("id", -1);
-        user.cur_level = prefs.getInt("cur_level", 1);
+        user.ease_level = prefs.getInt("ease_level", 1);
+        user.ordinary_level = prefs.getInt("ordinary_level", 1);
+        user.hard_level = prefs.getInt("hard_level", 1);
         user.score = prefs.getInt("score", 0);
         return user;
     }

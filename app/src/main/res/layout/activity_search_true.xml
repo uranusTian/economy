@@ -47,13 +47,6 @@
         android:id="@+id/top_layout">
     </RelativeLayout>
 
-<!--    <de.hdodenhof.circleimageview.CircleImageView-->
-<!--        android:id="@+id/image_icon"-->
-<!--        android:layout_width="80dp"-->
-<!--        android:layout_height="80dp"-->
-<!--        android:layout_marginTop="64dp"-->
-<!--        android:layout_centerHorizontal="true"/>-->
-
     <LinearLayout
         android:id="@+id/layout_begin"
         android:layout_width="match_parent"
@@ -61,30 +54,6 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
         android:orientation="vertical">
-
-<!--        <Button-->
-<!--            android:id="@+id/low_diff"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:text="减"/>-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/cur_diff"-->
-<!--            android:layout_width="30dp"-->
-<!--            android:gravity="center"-->
-<!--            android:textSize="20sp"-->
-<!--            android:text="1"-->
-<!--            android:layout_height="wrap_content">-->
-<!--        </TextView>-->
-
-<!--        <Button-->
-<!--            android:id="@+id/add_diff"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:text="加"/>-->
-
         <Button
             android:id="@+id/button_property_java"
             android:layout_width="match_parent"
@@ -95,6 +64,7 @@
             android:text="开始本关卡"/>
 
         <TextView
+            android:id="@+id/text_explain"
             android:layout_width="wrap_content"
             android:layout_gravity="center"
             android:textSize="14sp"
@@ -121,6 +91,26 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:text="挑战下一关"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_tip"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_tip"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:text="请点击数字：1"
+            android:layout_height="wrap_content">
+        </TextView>
 
     </LinearLayout>
 

@@ -1,7 +1,6 @@
 package com.uranus.economy.activity;
 
 import android.animation.Animator;
-import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -23,14 +22,13 @@ import com.uranus.economy.util.AppUtils;
 import com.uranus.economy.util.ScreenUtil;
 import com.uranus.economy.util.ToastUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class SearchTrueActivity extends BaseActivity implements View.OnClickListener{
+public class OrdinaryLevelActivity extends BaseActivity implements View.OnClickListener{
 
     @BindView(R.id.top_layout)
     protected RelativeLayout topLayout;
@@ -47,20 +45,17 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
     @BindView(R.id.layout_change_level)
     protected LinearLayout layoutChangeLevel;
 
-    @BindView(R.id.button_change_level)
-    protected Button buttonChangeLevel;
-
-    @BindView(R.id.button_property_java)
-    protected Button mButtonJava;
-
     @BindView(R.id.layout_tip)
     protected LinearLayout layoutTip;
 
     @BindView(R.id.text_tip)
     protected TextView textTip;
 
-    @BindView(R.id.text_explain)
-    protected TextView textExplain;
+    @BindView(R.id.button_change_level)
+    protected Button buttonChangeLevel;
+
+    @BindView(R.id.button_property_java)
+    protected Button mButtonJava;
 
     private Context mContext;
     private CircleImageView[] mImages;
@@ -76,7 +71,11 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
     private int[] lastLocation = new int[imageNum];
     private UserInfo curUser;
     private int costSocre = 0;//玩本关卡要消耗的积分
-    private int bonusSocre = 1;//通关本关卡奖励的积分
+    private int bonusSocre = 0;//通关本关卡奖励的积分
+    private int curNeedClickNumber = 1;//当前需要点击的数字
+
+    @BindView(R.id.text_explain)
+    protected TextView textExplain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +93,7 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            //开始本关卡按钮
             case R.id.button_property_java:
                 layoutBegin.setVisibility(View.GONE);
                 curUser.score -= costSocre;
@@ -104,7 +104,7 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
             case R.id.button_change_level:
                 layoutChangeLevel.setVisibility(View.GONE);
                 layoutBegin.setVisibility(View.VISIBLE);
-                curLevel.setText("当前关卡：" + curUser.ease_level);
+                curLevel.setText("当前关卡：" + curUser.ordinary_level);
                 refreshData();
                 break;
         }
@@ -113,9 +113,9 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void initData() {
         curUser = AppUtils.getUserInfo(getApplicationContext());
-        curLevel.setText("当前关卡：" + curUser.ease_level);
+        curLevel.setText("当前关卡：" + curUser.ordinary_level);
         curScore.setText("当前积分：" + curUser.score);
-        curDiffNum = curUser.ease_level;
+        curDiffNum = curUser.ordinary_level;
         refreshData();
     }
 
@@ -123,21 +123,21 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
         int common = 30;
 
         moveNum = 3 + curDiffNum / 8;
-        if(curDiffNum < 4){
-            costSocre = 0;
-            bonusSocre = 1;
+        if(curDiffNum < 3){
+            costSocre = 2;
+            bonusSocre = 3;
             imageNum = 2;
         } else if(curDiffNum < 20){
-            costSocre = 1;
-            bonusSocre = 2;
+            costSocre = 3;
+            bonusSocre = 5;
             imageNum = 3;
         }  else if(curDiffNum < 50){
-            costSocre = 2;
-            bonusSocre = 4;
+            costSocre = 5;
+            bonusSocre = 10;
             imageNum = 4;
         } else {
-            costSocre = 3;
-            bonusSocre = 6;
+            costSocre = 8;
+            bonusSocre = 15;
             imageNum = 5;
         }
         durationX = 40 - curDiffNum / 4;
@@ -146,90 +146,6 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
         }
         durationX = durationX * common;
         textExplain.setText("说明：开始本关卡需要消耗" + costSocre + "积分，闯关成功可获取" + bonusSocre + "积分");
-
-//        switch (curDiffNum){
-//            case 1:
-//                moveNum = 4;
-//                imageNum = 2;
-//                durationX = 40 * common;
-//                break;
-//            case 2:
-//                moveNum = 6;
-//                imageNum = 2;
-//                durationX = 30 * common;
-//                break;
-//            case 3:
-//                moveNum = 3;
-//                imageNum = 3;
-//                durationX = 30 * common;
-//                break;
-//            case 4:
-//                moveNum = 6;
-//                imageNum = 3;
-//                durationX = 30 * common;
-//                break;
-//            case 5:
-//                moveNum = 8;
-//                imageNum = 3;
-//                durationX = 30 * common;
-//                break;
-//            case 6:
-//                moveNum = 10;
-//                imageNum = 3;
-//                durationX = 30 * common;
-//                break;
-//            case 7:
-//                moveNum = 13;
-//                imageNum = 3;
-//                durationX = 20 * common;
-//                break;
-//            case 8:
-//                moveNum = 7;
-//                imageNum = 4;
-//                durationX = 20 * common;
-//                break;
-//            case 9:
-//                moveNum = 10;
-//                imageNum = 4;
-//                durationX = 20 * common;
-//                break;
-//            case 10:
-//                moveNum = 13;
-//                imageNum = 4;
-//                durationX = 20 * common;
-//                break;
-//            case 11:
-//                moveNum = 15;
-//                imageNum = 4;
-//                durationX = 20 * common;
-//                break;
-//            case 12:
-//                moveNum = 18;
-//                imageNum = 4;
-//                durationX = 20 * common;
-//                break;
-//            case 13:
-//                moveNum = 20;
-//                imageNum = 4;
-//                durationX = 15 * common;
-//                break;
-//            case 14:
-//                moveNum = 8;
-//                imageNum = 5;
-//                durationX = 20 * common;
-//                break;
-//            case 15:
-//                moveNum = 14;
-//                imageNum = 5;
-//                durationX = 18 * common;
-//                break;
-//            case 16:
-//                moveNum = 20;
-//                imageNum = 5;
-//                durationX = 15 * common;
-//                break;
-//        }
-
 
         moveXDistance = ScreenUtil.getScreenWidth() / 5;
         IMAGE_SIZE = ScreenUtil.getScreenWidth() / 6;
@@ -251,13 +167,25 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
             layoutParams.topMargin = (i + 1) * margintop - IMAGE_SIZE;
             layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
             curImage.setLayoutParams(layoutParams);
-            if(i == (imageNum - 1) / 2){
+            if(i == 0){
                 Picasso.with(mContext)
-                        .load(R.mipmap.ic_right)
+                        .load(R.mipmap.ic_number_1)
                         .into(curImage);
-            } else {
+            } else if(i == 1){
                 Picasso.with(mContext)
-                        .load(R.mipmap.ic_wrong)
+                        .load(R.mipmap.ic_number_2)
+                        .into(curImage);
+            } else if(i == 2){
+                Picasso.with(mContext)
+                        .load(R.mipmap.ic_number_3)
+                        .into(curImage);
+            } else if(i == 3){
+                Picasso.with(mContext)
+                        .load(R.mipmap.ic_number_4)
+                        .into(curImage);
+            } else if(i == 4){
+                Picasso.with(mContext)
+                        .load(R.mipmap.ic_number_5)
                         .into(curImage);
             }
 
@@ -277,25 +205,36 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
     }
 
     private void clickImage(int imageIndex){
-        if(imageIndex == (imageNum - 1) / 2){
+        if(imageIndex == 0){
+            picReverse(mImages[imageIndex],R.mipmap.ic_number_1,null);
+        } else if(imageIndex == 1){
+            picReverse(mImages[imageIndex],R.mipmap.ic_number_2,null);
+        } else if(imageIndex == 2){
+            picReverse(mImages[imageIndex],R.mipmap.ic_number_3,null);
+        } else if(imageIndex == 3){
+            picReverse(mImages[imageIndex],R.mipmap.ic_number_4,null);
+        } else if(imageIndex == 4){
+            picReverse(mImages[imageIndex],R.mipmap.ic_number_5,null);
+        }
+
+        if(imageIndex == curNeedClickNumber - 1){
             curUser.score += bonusSocre;
-            curUser.ease_level++;
+            curUser.ordinary_level++;
 //            curLevel.setText("当前关卡：" + curUser.cur_level);
             curScore.setText("当前积分：" + curUser.score);
             ToastUtils.showShort("恭喜你，选择正确，积分加 " + bonusSocre + "，可挑战下一关");
-            picReverse(mImages[imageIndex],R.mipmap.ic_right,null);
+//            picReverse(mImages[imageIndex],R.mipmap.ic_right,null);
             buttonChangeLevel.setText("挑战下一关");
         } else {
-            curUser.ease_level--;
-            if(curUser.ease_level < 0){
-                curUser.ease_level = 0;
+            curUser.ordinary_level--;
+            if(curUser.ordinary_level < 0){
+                curUser.ordinary_level = 0;
             }
             ToastUtils.showShort("很遗憾，选择错误，关卡减 1");
-            picReverse(mImages[imageIndex],R.mipmap.ic_wrong,null);
             buttonChangeLevel.setText("挑战上一关");
         }
+        curDiffNum = curUser.ordinary_level;
         layoutTip.setVisibility(View.GONE);
-        curDiffNum = curUser.ease_level;
         layoutChangeLevel.setVisibility(View.VISIBLE);
         AppUtils.saveUserInfo(getApplicationContext(),curUser);
 //        refreshData();
@@ -370,32 +309,10 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
         set.start();
     }
 
-    private void startXmlProperty() {
-//        AnimatorSet animationSet = (AnimatorSet) AnimatorInflater.loadAnimator(mContext, R.animator.property_set);
-//        animationSet.setTarget(mImageView);
-//        animationSet.start();
-    }
-
-    private void test() {
-
-        ObjectAnimator scaleX = ObjectAnimator.ofFloat(mImages[0], "translationX", 0f,250,0f);
-        ObjectAnimator scaleY = ObjectAnimator.ofFloat(mImages[0], "translationY", 0f,400);
-        AnimatorSet animatorSet1 = new AnimatorSet();
-        scaleX.setDuration(10000);
-        scaleX.setInterpolator(new CurveInterpolator());
-        scaleY.setDuration(10000);
-        animatorSet1.playTogether(scaleX,scaleY);
-        animatorSet1.start();
-    }
-
-    private int subAbs(int a, int b){
-        if(a>b){
-            return a - b;
-        }
-        return b - a;
-    }
-
     private void startJavaProperty() {
+        Random r = new Random();
+        curNeedClickNumber = r.nextInt(imageNum) + 1;
+
         canClickImage = false;
         AnimatorSet[] animatorSets = new AnimatorSet[imageNum];
         int moveY = (ScreenUtil.getScreenHeight() - IMAGE_SIZE * imageNum) / (imageNum + 1) + IMAGE_SIZE;
@@ -472,7 +389,7 @@ public class SearchTrueActivity extends BaseActivity implements View.OnClickList
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         layoutTip.setVisibility(View.VISIBLE);
-                        textTip.setText("请点击对勾图案");
+                        textTip.setText("请点击数字：" + curNeedClickNumber);
                         canClickImage = true;
                     }
                     @Override

@@ -10,13 +10,17 @@ public class UserInfo implements Serializable {
     //用户id
     public int id;
 
-    //当前关卡
-    public int cur_level;
+    //简单关卡
+    public int ease_level;
+    //普通关卡
+    public int ordinary_level;
+    //困难关卡
+    public int hard_level;
 
     //当前得分
     public int score;
 
     public String toString(){
-        return "device_num:"+device_num+"; id:"+id+"; cur_level:"+cur_level+"; score" + score;
+        return "device_num:"+device_num+"; id:"+id+"; ease_level:"+ease_level+"; score" + score;
     }
 }
